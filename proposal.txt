@@ -1,0 +1,41 @@
+Project Title: Starbucks Simulator
+Group Members: Eric Claerhout, Henry Lin
+IDs:           1532360, 1580649
+
+Description:
+
+Starbucks simulator is a terminal-based game where users are given a randomly
+chosen name and are tasked with finding alternative spellings in a timed
+environment, akin to the common misspellings of client names by Starbucks
+baristas. The project will implement the Damerau-Levenshtien algorithm for
+determining the edit distance between the original name and the user's input,
+which will be used as the score. The twist, however, is that the user is
+competing against a variety of phonetic indexing algorithms such as Soundex,
+NYSIIS, or Metaphone. If the misspelled name does have the same phonetic index
+as the original, there will be no points awarded. The style of the project will
+draw from retro-style fighting games such as Street Fighter.
+
+Beyond this base game, we hope to implement some simple ASCII art and multiple
+datasets of names from various linguistic origin to keep the game interesting.
+
+
+Milestones:
+1. Create score class which implements Damerau-Levenshtien and CPU class which
+   implements Soundex. Add basic input-output functionality to test the classes.
+2. Add basic score-tracking logic and CSV parsing to make use of name datasets.
+   Implement NYSIIS. The game should be playable, though unfinished in this
+   stage.
+3. Improve on user interaction, add timer functionality, moving to next name,
+   implement Metaphone. The game should be fully playable at this stage, but may
+   be lacking QoL features.
+4. Finalize the user interaction and QoL features such as multiple rounds,
+   user-selection of the opponent.
+
+As time allows:
+5. Implement more "opponents" such as Double Metaphone, Match-Rating
+6. Improve on user interaction with simple, ASCII-based GUI
+7. Implement multiple datasets, acting as the user's character select
+
+Stretch Goals:
+- Leaderboards
+- Damerau-Levenshtien distance breakdown
