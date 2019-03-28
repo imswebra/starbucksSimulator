@@ -20,9 +20,78 @@ Final Project: Starbucks Simulator
 using namespace std;
 
 
-// --------- //
-// Functions //
-// --------- //
+// ----------------- //
+// General Functions //
+// ----------------- //
+
+/* Create Prompt function
+Creates and draws a centered prompt window at the top of the terminal, complete
+with border. Looks best if the prompt string is the same parity as the
+terminal's width (odd or even). Returns the created window for deletion later.
+*/
+WINDOW* createPrompt(string p) {
+    // Create a window for the prompt
+    WINDOW* pWin = newwin(3, p.size() + 4, 1, (COLS - p.size() - 4) / 2);
+
+    // Draw the prompt
+    wborder(pWin, '|', '|', '-', '-', '+', '+', '+', '+');
+    mvwprintw(pWin, 1, 2, p.c_str());
+
+    // Refresh
+    refresh();
+    wrefresh(pWin);
+
+    return pWin;
+}
+
+
+// ---------------------- //
+// Title Screen Functions //
+// ---------------------- //
+
+/* Title Screen function
+Draws the title screen and waits for user input (Enter) before returning.
+*/
+void titleScreen() {
+    // Ascii art logo, 8 rows by 50 columns
+    string logo[8];
+    logo[0] = "   _____ __             __               __";
+    logo[1] = "  / ___// /_____ ______/ /_  __  _______/ /_______";
+    logo[2] = "  \\__ \\/ __/ __ `/ ___/ __ \\/ / / / ___/ // / ___/";
+    logo[3] = " ___/ / /_/ /_/ / /  / /_/ / /_/ / /__/ , <(__  )";
+    logo[4] = "/____/\\__/\\__,_/_/  /_.___/\\__,_/\\___/_/|_/____/";
+    logo[5] = "____ _ _  _ _  _ _    ____ ___ ____ ____";
+    logo[6] = "[__  | |\\/| |  | |    |__|  |  |  | |__/";
+    logo[7] = "___] | |  | |__| |___ |  |  |  |__| |  \\";
+
+    // Create window and draw the logo
+    WINDOW * logoWin = newwin(8, 50, 0, (COLS - 50) / 2);
+    for (int i = 0; i < 5; i++) mvwprintw(logoWin, i, 0, logo[i].c_str());
+    for (int i = 5; i < 8; i++) mvwprintw(logoWin, i, 5, logo[i].c_str());
+
+    // Draw Insert Coin
+    attron(A_STANDOUT);
+    mvprintw(10, (COLS - 11) / 2, "Press Enter");
+    attroff(A_STANDOUT);
+
+    // Refresh
+    refresh();
+    wrefresh(logoWin);
+
+    // Wait for enter
+    int key = 0;
+    while (key != 10) key = getch();
+
+    // Cleanup
+    delwin(logoWin);
+    clear();
+    refresh();
+}
+
+
+// -------------------------- //
+// Menu Functions and Classes //
+// -------------------------- //
 
 /* Choices class
 Based on the string vector passed in the constructor, each string's drawing
@@ -61,6 +130,8 @@ public:
         calcPos();
     }
 
+    int getSelect() { return selection; }
+
     // Sets the selection equal to 'i', with wrap-around.
     void select(int i) {
         oldSelection = selection;
@@ -78,8 +149,6 @@ public:
         oldSelection = selection;
         selection = posMod(selection - i, size);
     }
-
-    int getSelect() { return selection; }
 
     /* Draws All Choices function
     Draws the choices in the passed window based on the calculated pos values.
@@ -142,27 +211,6 @@ int processMenu(WINDOW* cWin, choices c) {
 }
 
 
-/* Create Prompt function
-Creates and draws a centered prompt window at the top of the terminal, complete
-with border. Looks best if the prompt string is the same parity as the
-terminal's width (odd or even). Returns the created window for deletion later.
-*/
-WINDOW* createPrompt(string p) {
-    // Create a window for the prompt
-    WINDOW* pWin = newwin(3, p.size() + 4, 1, (COLS - p.size() - 4) / 2);
-
-    // Draw the prompt
-    wborder(pWin, '|', '|', '-', '-', '+', '+', '+', '+');
-    mvwprintw(pWin, 1, 2, p.c_str());
-
-    // Refresh
-    refresh();
-    wrefresh(pWin);
-
-    return pWin;
-}
-
-
 /* Select Screen function
 Draws the select screen and processes user input to allow user selection.
 Returns an integer corresponding to the user's choice.
@@ -195,45 +243,9 @@ int selectScreen(string prompt, vector<string> choiceStrs) {
 }
 
 
-/* Title Screen function
-Draws the title screen and waits for user input (Enter) before returning.
-*/
-void titleScreen() {
-    // Ascii art logo, 8 rows by 50 columns
-    string logo[8];
-    logo[0] = "   _____ __             __               __";
-    logo[1] = "  / ___// /_____ ______/ /_  __  _______/ /_______";
-    logo[2] = "  \\__ \\/ __/ __ `/ ___/ __ \\/ / / / ___/ // / ___/";
-    logo[3] = " ___/ / /_/ /_/ / /  / /_/ / /_/ / /__/ , <(__  )";
-    logo[4] = "/____/\\__/\\__,_/_/  /_.___/\\__,_/\\___/_/|_/____/";
-    logo[5] = "____ _ _  _ _  _ _    ____ ___ ____ ____";
-    logo[6] = "[__  | |\\/| |  | |    |__|  |  |  | |__/";
-    logo[7] = "___] | |  | |__| |___ |  |  |  |__| |  \\";
-
-    // Create window and draw the logo
-    WINDOW * logoWin = newwin(8, 50, 0, (COLS - 50) / 2);
-    for (int i = 0; i < 5; i++) mvwprintw(logoWin, i, 0, logo[i].c_str());
-    for (int i = 5; i < 8; i++) mvwprintw(logoWin, i, 5, logo[i].c_str());
-
-    // Draw Insert Coin
-    attron(A_STANDOUT);
-    mvprintw(10, (COLS - 11) / 2, "Press Enter");
-    attroff(A_STANDOUT);
-
-    // Refresh
-    refresh();
-    wrefresh(logoWin);
-
-    // Wait for enter
-    int key = 0;
-    while (key != 10) key = getch();
-
-    // Cleanup
-    delwin(logoWin);
-    clear();
-    refresh();
-}
-
+// ------------------------------------- //
+// Gameplay Screen Functions and Classes //
+// ------------------------------------- //
 
 /* Buffer class
 Complimentary class to processKeyboard which stores the string being typed, the
