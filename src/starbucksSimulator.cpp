@@ -28,9 +28,10 @@ int main() {
     system("resize -s 12 56"); // Ghetto, not a good way to do this
     sleep(1);
 
+    // Ncurses initialization
     initscr();
-    cbreak(); // For the menu
-    noecho(); // For the menu
+    cbreak();
+    noecho();
 
     curs_set(0);
     titleScreen();
@@ -40,10 +41,15 @@ int main() {
                                 {"Opponent 0", "Opponent 1", "Opponent 2"});
     curs_set(1);
 
+    string result = gameplayScreen("Round 1: Henry");
+
     // Cleanup
     endwin();
 
-    cout << character << " " << opponent << endl;
+    cout << endl;
+    cout << "character: " << character << endl;
+    cout << "opponent: " << opponent << endl;
+    cout << "user input: " << result << endl;
 
     return 0;
 }

@@ -15,6 +15,7 @@ Final Project: Starbucks Simulator
 #include <ncurses.h>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -101,7 +102,6 @@ public:
         wattron(win, A_STANDOUT);
         mvwprintw(win, 0, pos[selection], str[selection].c_str());
         wattroff(win, A_STANDOUT);
-        wrefresh(win);
     }
 };
 
@@ -232,4 +232,153 @@ void titleScreen() {
     delwin(logoWin);
     clear();
     refresh();
+}
+
+
+/* Buffer class
+Complimentary class to processKeyboard which stores the string being typed, the
+maximum size of the string (passed in the constructor) and the location of the
+cursor. Contains all the methods needed by processKeyboard to allow the
+insertion and deletion of characters and the movement of the cursor.
+*/
+class buffer {
+private:
+    string str; // The "buffer" in which characters are stored
+    unsigned int maxSize; // Maximum size of the string
+    unsigned int index = 0; // The cursor position, an index to the next char
+
+    // Redraws the buffer to the passed window
+    void redrawBuffer(WINDOW* win) {
+        werase(win);
+        mvwprintw(win, 0, 0, str.c_str());
+        wmove(win, 0, index);
+    };
+
+public:
+    // Constructor
+    buffer(unsigned int maxSize) : maxSize(maxSize) {}
+
+    string getBuffer() { return str; }
+
+    // Inserts the character at the cursor
+    void insert(WINDOW* win, char c) {
+        if (str.size() == maxSize) return;
+        str.insert(index, string(1, c));
+        index++;
+        redrawBuffer(win);
+    }
+
+    // Removes the character behind the cursor
+    void backspace(WINDOW* win) {
+        if (index == 0) return;
+        index--;
+        str.erase(index, 1);
+        redrawBuffer(win);
+    }
+
+    // Removes the character at the cursor
+    void del(WINDOW* win) {
+        if (index == str.size()) return;
+        str.erase(index, 1);
+        redrawBuffer(win);
+    }
+
+    // Moves the cursor up by one
+    void indexInc(WINDOW* win) {
+        if (index == str.size()) return;
+        index++;
+        wmove(win, 0, index);
+    }
+
+    // Moves the cursor down by one
+    void indexDec(WINDOW* win) {
+        if (index == 0) return;
+        index--;
+        wmove(win, 0, index);
+    }
+
+    // Sets the cursor to the beginning of the line
+    void indexBegin(WINDOW* win) {
+        index = 0;
+        wmove(win, 0, index);
+    }
+
+    // Sets the cursor to the end of the line
+    void indexEnd(WINDOW* win) {
+        index = str.size();
+        wmove(win, 0, index);
+    }
+
+};
+
+
+/* Process Keyboard function
+Waits for user input and takes appropriate action, updating the passed window
+and buffer. Returns true if enter was pressed, returns false otherwise.
+
+Args:
+- iWin: The input window to update
+- b: The buffer to update
+*/
+bool processKeyboard(WINDOW* iWin, buffer& b) {
+    int key = wgetch(iWin);
+    switch (key) {
+        case 10:
+            return true;
+        case 'A' ... 'Z':
+        case 'a' ... 'z':
+        case ' ':
+        case '-':
+            b.insert(iWin, (char) key);
+            break;
+        case KEY_BACKSPACE:
+            b.backspace(iWin);
+            break;
+        case KEY_DC: // Delete key
+            b.del(iWin);
+            break;
+        case KEY_RIGHT:
+            b.indexInc(iWin);
+            break;
+        case KEY_LEFT:
+            b.indexDec(iWin);
+            break;
+        case 545: // Ctrl + left arrow
+        case KEY_HOME:
+            b.indexBegin(iWin);
+            break;
+        case 560: // Ctrl + right arrow
+        case KEY_END:
+            b.indexEnd(iWin);
+            break;
+    }
+    return false;
+}
+
+
+/* Gameplay Screen function
+Draws the gameplay screen and processes user input to allow typing in a name.
+Returns the string typed by the user.
+
+Args:
+- name: The prompt name displayed at the top of the screen
+*/
+string gameplayScreen(string name) {
+    // Create and draw the prompt
+    WINDOW* pWin = createPrompt(name);
+
+    // Create and draw the input window
+    WINDOW* iWin = newwin(1, 50, 7, (COLS - 50) / 2);
+    keypad(iWin, TRUE);
+    wrefresh(iWin);
+
+    // Get input
+    buffer b(50);
+    while (!processKeyboard(iWin, b));
+
+    // Cleanup
+    delwin(pWin);
+    clear();
+    refresh();
+    return b.getBuffer();
 }
