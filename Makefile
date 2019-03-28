@@ -10,7 +10,7 @@ VPATH = $(SRC_DIR)
 
 # Program and Objects
 PROGRAM = starbucksSimulator
-OBJS = starbucksSimulator.o ui.o
+OBJS = starbucksSimulator.o ui.o levenshtein-distance.o
 
 
 ###############
@@ -23,6 +23,9 @@ $(OBJ_DIR)/starbucksSimulator.o: starbucksSimulator.cpp ui.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/ui.o: ui.cpp ui.h
+	$(CC) $< -o $@ $(CFLAGS)
+
+$(OBJ_DIR)/levenshtein-distance.o: levenshtein-distance.cpp levenshtein-distance.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 
