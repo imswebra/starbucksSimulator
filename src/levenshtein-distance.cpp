@@ -19,9 +19,9 @@ using namespace std;
 // Optimal String Alignment Distance calculation
 // Based off pseudocode found here:
 // https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
-unsigned int oStringAlignment(string A, string B) {
+int oStringAlignment(string A, string B) {
     bool cost = 0;  // cost will only be 0 or 1
-    unsigned int distance[A.length() + 2][B.length() + 2];
+    int distance[A.length() + 2][B.length() + 2];
 
     for (unsigned int i = 0; i <= A.length(); i++) {
         distance[i][0] = i;
