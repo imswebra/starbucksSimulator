@@ -16,6 +16,10 @@ using namespace std;
 // Size 26 means that no accented characters are supported
 #define alphabetSize 26  // Supported alphabet size
 
+void makeUppercase(string& str) {
+    for (auto & c: str) c = toupper(c);
+}
+
 // Optimal String Alignment Distance calculation
 // Based off pseudocode found here:
 // https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
@@ -56,6 +60,9 @@ int oStringAlignment(string A, string B) {
 // Based off pseudocode found here:
 // https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
 int dynamicDL(string A, string B) {
+    // Strings need to be uppercase for dynamic programming comparison
+    makeUppercase(A);
+    makeUppercase(B);
 
     bool cost = 0;  // cost will only ever be 0 or 1
     int k, l, db;
@@ -103,12 +110,4 @@ int dynamicDL(string A, string B) {
 
     // The final distance is the last index in the 2-d array
     return distances[A.length() + 1][B.length() + 1];
-}
-
-int main() {
-    string s1 = "CA";
-    string s2 = "ABC";
-    cout << oStringAlignment(s1, s2) << endl;
-    cout << dynamicDL(s1, s2) << endl;
-    return 0;
 }
