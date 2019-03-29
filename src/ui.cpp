@@ -263,7 +263,7 @@ private:
     // Redraws the buffer to the passed window
     void redrawBuffer(WINDOW* win) {
         werase(win);
-        mvwprintw(win, 0, 0, str.c_str());
+        mvwprintw(win, 0, (maxSize - str.size()) / 2, str.c_str());
         redrawCursor(win);
     };
 
@@ -274,7 +274,7 @@ public:
     string getBuffer() { return str; }
 
     void redrawCursor(WINDOW* win) {
-        wmove(win, 0, index);
+        wmove(win, 0, index + (maxSize - str.size()) / 2);
     }
 
     // Inserts the character at the cursor
@@ -331,13 +331,16 @@ public:
 
 /* Timer class
 Stores all the needed information for updating and verifying the user input
-timer. Initialized with the starting value of the timer and the start time.
+timer. Initialized with the starting value of the timer and the start time. Note
+that the drawing function right aligns and assumes the value can be expressed in
+three decimal digits.
 */
 
 // Draws the timer
 void timer::draw(WINDOW* win) {
-    werase(win);
-    mvwprintw(win, 0, 0, to_string(timerVal).c_str());
+    string printStr = to_string(timerVal);
+    printStr.insert(printStr.begin(), 3 - printStr.size(), '0');
+    mvwprintw(win, 0, 0, printStr.c_str());
     wrefresh(win);
 }
 
@@ -400,35 +403,39 @@ bool processKeyboard(WINDOW* iWin, buffer& b) {
 
 
 /* Gameplay Screen function
-Draws the timer and input windows, processes the user input, and updates the
-timer accordingly. Returns the string typed by the user when enter is pressed,
-or the partial string within the buffer if the timer runs out.
+Draws the timer, score and input windows, processes the user input, and updates
+the timer accordingly. Returns the string typed by the user when enter is
+pressed, or the partial string within the buffer if the timer runs out.
 
 Args:
 - t: The timer object to be updated
+- score: The score to display
 */
-string gameplayScreen(timer& t) {
-    // Create the timer window and draw the timer
-    WINDOW* tWin = newwin(1, 2, 0, 0);
-    t.draw(tWin);
+string gameplayScreen(timer& t, int& score) {
+    // Create and draw the time and score window
+    WINDOW* tsWin = newwin(1, 9, 5, (COLS - 9) / 2);
+    mvwprintw(tsWin, 0, 0, "000 | 000");
+    t.draw(tsWin);
+    mvwprintw(tsWin, 0, 6, to_string(score).c_str());
+    wrefresh(tsWin);
 
     // Create and draw the input window
-    WINDOW* iWin = newwin(1, 25, 7, (COLS - 25) / 2);
+    WINDOW* iWin = newwin(1, 50, 7, (COLS - 50) / 2);
     keypad(iWin, TRUE);
     wtimeout(iWin, 500);
     wrefresh(iWin);
 
     // Get input while updating the timer
-    buffer b(25);
+    buffer b(50);
     while (true) {
-        t.update(tWin); // Update the timer
+        t.update(tsWin); // Update the timer
         if (!t.verify()) break; // Break if out of time
         b.redrawCursor(iWin);
         if(processKeyboard(iWin, b)) break; // Break if Enter was pressed
     };
 
     // Cleanup
-    delwin(tWin);
+    delwin(tsWin);
     delwin(iWin);
     return b.getBuffer();
 }

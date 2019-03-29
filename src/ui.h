@@ -24,7 +24,9 @@ Final Project: Starbucks Simulator
 
 /* Timer class
 Stores all the needed information for updating and verifying the user input
-timer. Initialized with the starting value of the timer and the start time.
+timer. Initialized with the starting value of the timer and the start time. Note
+that the drawing function right aligns and assumes the value can be expressed in
+three decimal digits.
 */
 class timer {
 private:
@@ -83,13 +85,14 @@ WINDOW* createPrompt(std::string prompt);
 
 
 /* Gameplay Screen function
-Draws the timer and input windows, processes the user input, and updates the
-timer accordingly. Returns the string typed by the user when enter is pressed,
-or the partial string within the buffer if the timer runs out.
+Draws the timer, score and input windows, processes the user input, and updates
+the timer accordingly. Returns the string typed by the user when enter is
+pressed, or the partial string within the buffer if the timer runs out.
 
 Args:
 - t: The timer object to be updated
+- score: The score to display
 */
-std::string gameplayScreen(timer& t);
+std::string gameplayScreen(timer& t, int& score);
 
 #endif

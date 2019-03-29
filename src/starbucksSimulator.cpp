@@ -29,10 +29,12 @@ void round(string prompt) {
     // Create and draw the prompt
     WINDOW* pWin = createPrompt(prompt);
 
+    int score = 107;
+
     // Draw the rest of the gameplay screen and get the user input
-    timer t(10, time(NULL));
+    timer t(020, time(NULL));
     while (t.verify()) {
-        string result = gameplayScreen(t); // Get user input
+        string result = gameplayScreen(t, score); // Get user input
         // Check that result.size() > 0;
         // Clean result -> Remove spaces and hyphens
         // Check that result.size() > 0;
