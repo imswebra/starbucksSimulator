@@ -37,4 +37,14 @@ Args:
 */
 int selectScreen(std::string prompt, std::vector<std::string> choiceStrs);
 
+
+/* Gameplay Screen function
+Draws the gameplay screen and processes user input to allow typing in a name.
+Returns the string typed by the user.
+
+Args:
+- name: The prompt name displayed at the top of the screen
+*/
+std::string gameplayScreen(std::string name);
+
 #endif
