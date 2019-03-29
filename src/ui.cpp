@@ -15,7 +15,7 @@ Final Project: Starbucks Simulator
 #include <ncurses.h>
 #include <string>
 #include <vector>
-#include <algorithm>
+#include <ctime>
 
 using namespace std;
 
@@ -29,13 +29,14 @@ Creates and draws a centered prompt window at the top of the terminal, complete
 with border. Looks best if the prompt string is the same parity as the
 terminal's width (odd or even). Returns the created window for deletion later.
 */
-WINDOW* createPrompt(string p) {
+WINDOW* createPrompt(string prompt) {
     // Create a window for the prompt
-    WINDOW* pWin = newwin(3, p.size() + 4, 1, (COLS - p.size() - 4) / 2);
+    WINDOW* pWin = newwin(3, prompt.size() + 4, 1,
+                          (COLS - prompt.size() - 4) / 2);
 
     // Draw the prompt
     wborder(pWin, '|', '|', '-', '-', '+', '+', '+', '+');
-    mvwprintw(pWin, 1, 2, p.c_str());
+    mvwprintw(pWin, 1, 2, prompt.c_str());
 
     // Refresh
     refresh();
@@ -263,7 +264,7 @@ private:
     void redrawBuffer(WINDOW* win) {
         werase(win);
         mvwprintw(win, 0, 0, str.c_str());
-        wmove(win, 0, index);
+        redrawCursor(win);
     };
 
 public:
@@ -271,6 +272,10 @@ public:
     buffer(unsigned int maxSize) : maxSize(maxSize) {}
 
     string getBuffer() { return str; }
+
+    void redrawCursor(WINDOW* win) {
+        wmove(win, 0, index);
+    }
 
     // Inserts the character at the cursor
     void insert(WINDOW* win, char c) {
@@ -299,29 +304,55 @@ public:
     void indexInc(WINDOW* win) {
         if (index == str.size()) return;
         index++;
-        wmove(win, 0, index);
+        redrawCursor(win);
     }
 
     // Moves the cursor down by one
     void indexDec(WINDOW* win) {
         if (index == 0) return;
         index--;
-        wmove(win, 0, index);
+        redrawCursor(win);
     }
 
     // Sets the cursor to the beginning of the line
     void indexBegin(WINDOW* win) {
         index = 0;
-        wmove(win, 0, index);
+        redrawCursor(win);
     }
 
     // Sets the cursor to the end of the line
     void indexEnd(WINDOW* win) {
         index = str.size();
-        wmove(win, 0, index);
+        redrawCursor(win);
     }
 
 };
+
+
+/* Timer class
+Stores all the needed information for updating and verifying the user input
+timer. Initialized with the starting value of the timer and the start time.
+*/
+
+// Draws the timer
+void timer::draw(WINDOW* win) {
+    werase(win);
+    mvwprintw(win, 0, 0, to_string(timerVal).c_str());
+    wrefresh(win);
+}
+
+// Verifies the timer and redraws it if it was updated
+void timer::update(WINDOW* win) {
+    int oldVal = timerVal;
+    timerVal = max - difftime(time(NULL), startTime);
+    if (timerVal == oldVal) return;
+    draw(win);
+;}
+
+// Returns false if the timer is less than zero
+bool timer::verify() {
+    return timerVal >= 0;
+}
 
 
 /* Process Keyboard function
@@ -369,28 +400,35 @@ bool processKeyboard(WINDOW* iWin, buffer& b) {
 
 
 /* Gameplay Screen function
-Draws the gameplay screen and processes user input to allow typing in a name.
-Returns the string typed by the user.
+Draws the timer and input windows, processes the user input, and updates the
+timer accordingly. Returns the string typed by the user when enter is pressed,
+or the partial string within the buffer if the timer runs out.
 
 Args:
-- name: The prompt name displayed at the top of the screen
+- t: The timer object to be updated
 */
-string gameplayScreen(string name) {
-    // Create and draw the prompt
-    WINDOW* pWin = createPrompt(name);
+string gameplayScreen(timer& t) {
+    // Create the timer window and draw the timer
+    WINDOW* tWin = newwin(1, 2, 0, 0);
+    t.draw(tWin);
 
     // Create and draw the input window
-    WINDOW* iWin = newwin(1, 50, 7, (COLS - 50) / 2);
+    WINDOW* iWin = newwin(1, 25, 7, (COLS - 25) / 2);
     keypad(iWin, TRUE);
+    wtimeout(iWin, 500);
     wrefresh(iWin);
 
-    // Get input
-    buffer b(50);
-    while (!processKeyboard(iWin, b));
+    // Get input while updating the timer
+    buffer b(25);
+    while (true) {
+        t.update(tWin); // Update the timer
+        if (!t.verify()) break; // Break if out of time
+        b.redrawCursor(iWin);
+        if(processKeyboard(iWin, b)) break; // Break if Enter was pressed
+    };
 
     // Cleanup
-    delwin(pWin);
-    clear();
-    refresh();
+    delwin(tWin);
+    delwin(iWin);
     return b.getBuffer();
 }

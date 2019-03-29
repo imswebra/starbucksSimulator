@@ -12,6 +12,7 @@ Final Project: Starbucks Simulator
 // ------------------------ //
 #include <iostream>
 #include <ncurses.h>
+#include <ctime>
 #include <unistd.h> // For sleep
 
 #include "ui.h"
@@ -23,6 +24,30 @@ using namespace std;
 // Functions //
 // --------- //
 
+// TEMPORARY: Only as a demonstration of the gameplay ui
+void round(string prompt) {
+    // Create and draw the prompt
+    WINDOW* pWin = createPrompt(prompt);
+
+    // Draw the rest of the gameplay screen and get the user input
+    timer t(10, time(NULL));
+    while (t.verify()) {
+        string result = gameplayScreen(t); // Get user input
+        // Check that result.size() > 0;
+        // Clean result -> Remove spaces and hyphens
+        // Check that result.size() > 0;
+        // Verify equal phonetic index
+        // Calculate awarded points
+    }
+
+    // Cleanup
+    delwin(pWin);
+    clear();
+    refresh();
+}
+
+
+// Main function
 int main() {
     cout << "Starbucks Simulator Starting..." << endl;
     system("resize -s 12 56"); // Ghetto, not a good way to do this
@@ -41,15 +66,11 @@ int main() {
                                 {"Opponent 0", "Opponent 1", "Opponent 2"});
     curs_set(1);
 
-    string result = gameplayScreen("Round 1: Henry");
+    round("Round 1: Henry");
+    round("Round 2: Eric");
+    round("Round 3: Ryan");
 
     // Cleanup
     endwin();
-
-    cout << endl;
-    cout << "character: " << character << endl;
-    cout << "opponent: " << opponent << endl;
-    cout << "user input: " << result << endl;
-
     return 0;
 }

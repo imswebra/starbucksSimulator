@@ -12,8 +12,41 @@ Final Project: Starbucks Simulator
 // ------------------------ //
 // Includes and Definitions //
 // ------------------------ //
+#include <ncurses.h>
 #include <string>
 #include <vector>
+#include <ctime>
+
+
+// ------- //
+// Classes //
+// ------- //
+
+/* Timer class
+Stores all the needed information for updating and verifying the user input
+timer. Initialized with the starting value of the timer and the start time.
+*/
+class timer {
+private:
+    int timerVal; // The current value
+    int max; // The maximum possible value
+    time_t startTime; // The time at initialization
+
+public:
+    // Constructor
+    timer(int startVal, time_t startTime) : timerVal(startVal), max(startVal),
+                                            startTime(startTime) {}
+
+    // Draws the timer
+    void draw(WINDOW* win);
+
+    // Verifies the timer and redraws it if it was updated
+    void update(WINDOW* win);
+
+    // Returns false if the timer is less than zero
+    bool verify();
+};
+
 
 // --------- //
 // Functions //
@@ -38,13 +71,25 @@ Args:
 int selectScreen(std::string prompt, std::vector<std::string> choiceStrs);
 
 
-/* Gameplay Screen function
-Draws the gameplay screen and processes user input to allow typing in a name.
-Returns the string typed by the user.
+/* Create Prompt function
+Creates and draws a centered prompt window at the top of the terminal, complete
+with border. Looks best if the prompt string is the same parity as the
+terminal's width (odd or even). Returns the created window for later deletion.
 
 Args:
-- name: The prompt name displayed at the top of the screen
+- prompt: String to be displayed.
 */
-std::string gameplayScreen(std::string name);
+WINDOW* createPrompt(std::string prompt);
+
+
+/* Gameplay Screen function
+Draws the timer and input windows, processes the user input, and updates the
+timer accordingly. Returns the string typed by the user when enter is pressed,
+or the partial string within the buffer if the timer runs out.
+
+Args:
+- t: The timer object to be updated
+*/
+std::string gameplayScreen(timer& t);
 
 #endif
