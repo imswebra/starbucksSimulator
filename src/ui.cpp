@@ -66,9 +66,9 @@ void titleScreen() {
     logo[7] = "___] | |  | |__| |___ |  |  |  |__| |  \\";
 
     // Create window and draw the logo
-    WINDOW * logoWin = newwin(8, 50, 0, (COLS - 50) / 2);
-    for (int i = 0; i < 5; i++) mvwprintw(logoWin, i, 0, logo[i].c_str());
-    for (int i = 5; i < 8; i++) mvwprintw(logoWin, i, 5, logo[i].c_str());
+    WINDOW * logoWin = newwin(8, 53, 0, (COLS - 53) / 2);
+    for (int i = 0; i < 5; i++) mvwprintw(logoWin, i, 1, logo[i].c_str());
+    for (int i = 5; i < 8; i++) mvwprintw(logoWin, i, 12, logo[i].c_str());
 
     // Draw Insert Coin
     attron(A_STANDOUT);
@@ -263,7 +263,7 @@ private:
     // Redraws the buffer to the passed window
     void redrawBuffer(WINDOW* win) {
         werase(win);
-        mvwprintw(win, 0, (maxSize - str.size()) / 2, str.c_str());
+        mvwprintw(win, 0, (maxSize - str.size() + 1) / 2, str.c_str());
         redrawCursor(win);
     };
 
@@ -274,7 +274,7 @@ public:
     string getBuffer() { return str; }
 
     void redrawCursor(WINDOW* win) {
-        wmove(win, 0, index + (maxSize - str.size()) / 2);
+        wmove(win, 0, index + (maxSize - str.size() + 1) / 2);
     }
 
     // Inserts the character at the cursor
