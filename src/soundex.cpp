@@ -11,6 +11,8 @@ Final Project: Starbucks Simulator
 // Includes and Definitions //
 // ------------------------ //
 
+#include "soundex.h"
+
 #include <string>
 #include <algorithm> // remove, replace, unique
 #include <iostream>
@@ -46,7 +48,7 @@ void resizeWithZeros(string& str, int desiredLength) {
 }
 
 
-string soundex(string& name) {
+string soundex(string name) {
     string code = name;
 
     makeUppercase(code);
