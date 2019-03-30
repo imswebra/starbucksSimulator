@@ -29,10 +29,12 @@ void round(string prompt) {
     // Create and draw the prompt
     WINDOW* pWin = createPrompt(prompt);
 
+    int score = 107;
+
     // Draw the rest of the gameplay screen and get the user input
-    timer t(10, time(NULL));
+    timer t(020, time(NULL));
     while (t.verify()) {
-        string result = gameplayScreen(t); // Get user input
+        string result = gameplayScreen(t, score); // Get user input
         // Check that result.size() > 0;
         // Clean result -> Remove spaces and hyphens
         // Check that result.size() > 0;
@@ -50,7 +52,7 @@ void round(string prompt) {
 // Main function
 int main() {
     cout << "Starbucks Simulator Starting..." << endl;
-    system("resize -s 12 56"); // Ghetto, not a good way to do this
+    system("resize -s 12 55"); // Ghetto, not a good way to do this
     sleep(1);
 
     // Ncurses initialization
@@ -60,10 +62,11 @@ int main() {
 
     curs_set(0);
     titleScreen();
-    int character = selectScreen("Choose your character:",
-                                 {"Character 0", "Character 1", "Character 2"});
-    int opponent = selectScreen("Choose your opponent:",
-                                {"Opponent 0", "Opponent 1", "Opponent 2"});
+
+    int character = selectScreen("Choose your fighter",
+                                 {"Names 0", "Names 1", "Names 2"});
+    int opponent = selectScreen("Choose your rival",
+                                {"Character 0", "Character 1", "Character 2"});
     curs_set(1);
 
     round("Round 1: Henry");
