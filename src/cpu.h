@@ -8,16 +8,16 @@ CMPUT 275 Winter 2019
 Final Project: Starbucks Simulator
 #########################################
 */
+
 #include <string>
 #include <vector>
 
+
 using namespace std;
 
-class cpu {
+class Game {
 public:
-    cpu (int c, int o);
-
-    string currentName;
+    Game(int c, int o);
 
     void nextName();
 
@@ -29,10 +29,12 @@ public:
 
 private:
 
+    string currentName;
     unsigned int index;
     int opponent;
     int nameList;
     int score;
+
 
     void calculateScore(string input);
 
@@ -47,5 +49,6 @@ private:
         "Kaitlyn",
     };
 };
+
 
 #endif

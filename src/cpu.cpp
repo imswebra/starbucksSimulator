@@ -10,6 +10,8 @@ Final Project: Starbucks Simulator
 
 #include <string>
 #include <algorithm>  // for random_shuffle
+#include <vector>
+#include <random>
 
 #include "levenshtein-distance.h"
 #include "soundex.h"
@@ -19,34 +21,37 @@ using namespace std;
 
 
 
-cpu::cpu(int c, int o) {
+Game::Game(int c, int o) {
     // Set the selected "player" as the selected list of names
     this->nameList = c;
     // Set the selected "opponent" as the chosen phonetic algorithm
     this->opponent = o;
 
-    random_shuffle(this->names.begin(), this->names.end());  // array, array+SIZE
+    auto gen = std::default_random_engine {};
+    shuffle(this->names.begin(), this->names.end(), gen);  // array, array+SIZE
     this->index = 0;
+    this->currentName = this->names[0];
 }
 
-void cpu::nextName() {
-    this->index++;
-}
-
-string cpu::displayName() {
-    if (this->index < this->names.size()) {
-        return this->names[this->index];
+void Game::nextName() {
+    if(index < this->names.size()){
+        this->index++;
+        this->currentName = this->names[this->index];
     }
     else {
-        return "EOL";
+        this->currentName = "End of names";
     }
 }
 
-int cpu::getScore() {
+string Game::displayName() {
+    return this->currentName;
+}
+
+int Game::getScore() {
     return this->score;
 }
 
-void cpu::processInput(string input) {
+void Game::processInput(string input) {
     string desired = soundex(this->names[this->index]);
     string given = soundex(input);
     if (desired == given) {
@@ -57,15 +62,6 @@ void cpu::processInput(string input) {
     }
 }
 
-void cpu::calculateScore(string A) {
-    this->score = 1.5 * dynamicDL(this->names[this->index], A);
-}
-
-int main() {
-    cpu foo(0, 0);
-    cout << foo.displayName() << endl;
-    string s;
-    cin >> s;
-    foo.processInput(s);
-    cout << foo.getScore() << endl;
+void Game::calculateScore(string A) {
+    this->score = dynamicDL(this->currentName, A);
 }
