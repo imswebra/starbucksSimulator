@@ -13,32 +13,30 @@ Final Project: Starbucks Simulator
 #include <vector>
 
 
-using namespace std;
-
 class Game {
 public:
     Game(int c, int o);
 
     void nextName();
 
-    void processInput(string input);
+    void processInput(std::string input);
 
     int getScore();
 
-    string displayName();
+    std::string displayName();
 
 private:
 
-    string currentName;
+    std::string currentName;
     unsigned int index;
     int opponent;
     int nameList;
     int score;
 
 
-    void calculateScore(string input);
+    void calculateScore(std::string input);
 
-    vector<string> names = {  // Placeholder before being able to obtain names from CSV
+    std::vector<std::string> names = {  // Placeholder before being able to obtain names from CSV
         "Henry",
         "Joseph",
         "Erica",
