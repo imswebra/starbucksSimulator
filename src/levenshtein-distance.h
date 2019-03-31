@@ -10,8 +10,6 @@ Final Project: Starbucks Simulator
 */
 #include <string>
 
-int oStringAlignment(std::string A, std::string B);
-
-int dynamicDL(std::string A, std::string B);
+int dynamicDL(std::string& A, std::string& B);
 
 #endif
