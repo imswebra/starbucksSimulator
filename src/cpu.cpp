@@ -57,9 +57,6 @@ void Game::processInput(string input) {
     if (desired == given) {
         calculateScore(input);
     }
-    else {
-        this->score = -1;
-    }
 }
 
 void Game::calculateScore(string A) {
