@@ -8,7 +8,6 @@ Final Project: Starbucks Simulator
 */
 #include "levenshtein-distance.h"
 
-#include <iostream>
 #include <string>
 #include <algorithm>  // for min()
 #include <cstring>  // for memset()
@@ -30,9 +29,9 @@ int dynamicDL(string& A, string& B) {
     // Strings need to be uppercase for dynamic programming comparison
     makeUppercase(A);
     makeUppercase(B);
-    static const int aSize = A.length();
-    static const int bSize = B.length();
-    //cout << "Not fault" << endl;
+    int aSize = A.length();
+    int bSize = B.length();
+
     bool cost = 0;  // cost will only ever be 0 or 1
     int k, db;
     int l;
@@ -41,7 +40,8 @@ int dynamicDL(string& A, string& B) {
     unsigned int da[alphabetSize];
     memset(da, 0, sizeof(da));
 
-    // Allocate memory for distance table
+    // Allocate memory for distance table:
+    // https://stackoverflow.com/questions/9219712/c-array-expression-must-have-a-constant-value
     int maxdistance = aSize + bSize;
     int** distances = new int*[aSize + 2];
     for (int i = 0; i <= aSize + 2; i++) {
@@ -58,7 +58,7 @@ int dynamicDL(string& A, string& B) {
         distances[0][j] = maxdistance;
         distances[1][j] = j - 1;
     }
-    //cout << "Also no fault" << endl;
+
     // Create all distances given the operations on the distances table
     for (int i = 2; i <= aSize + 2; i++) {
         db = 1;
@@ -80,20 +80,20 @@ int dynamicDL(string& A, string& B) {
         }
         da[A[i-2] - 64] = i;
     }
-    //cout << "boom" << endl;
-    //cout << distances[aSize + 1][bSize + 1] << endl;
-    //cout << endl;
+
+    // The final distance is the last index in the 2-d array
     int c = distances[aSize + 1][bSize + 1];
 
     // Free the memory to prevent leaks
-    //free(da);
+
     // for (int i = 0; i <= aSize + 2; i++) {
     //     delete[] distances[i];
     //     distances[i] = NULL;
     // }
     // delete[] distances;
     // distances = NULL;
+    // FIXME freeing memory from heap results in double free vulnerability
 
-    // The final distance is the last index in the 2-d array
+
     return c;
 }
