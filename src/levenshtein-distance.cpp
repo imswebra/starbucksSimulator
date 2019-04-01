@@ -86,12 +86,12 @@ int dynamicDL(string& A, string& B) {
 
     // Free the memory to prevent leaks
 
-    // for (int i = 0; i <= aSize + 2; i++) {
-    //     delete[] distances[i];
-    //     distances[i] = NULL;
-    // }
-    // delete[] distances;
-    // distances = NULL;
+    for (int i = 0; i <= aSize + 2; i++) {
+        //delete[] distances[i];
+        distances[i] = NULL;
+    }
+    distances = NULL;
+    free(distances);
     // FIXME freeing memory from heap results in double free vulnerability
 
 
