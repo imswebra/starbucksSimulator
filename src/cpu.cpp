@@ -27,6 +27,8 @@ Game::Game(int c, int o) {
     // Set the selected "opponent" as the chosen phonetic algorithm
     this->opponent = o;
 
+    this->score = 0;
+
     auto gen = std::default_random_engine {};
     shuffle(this->names.begin(), this->names.end(), gen);  // array, array+SIZE
     this->index = 0;
@@ -52,7 +54,7 @@ int Game::getScore() {
 }
 
 void Game::processInput(string input) {
-    string desired = soundex(this->names[this->index]);
+    string desired = soundex(this->currentName);
     string given = soundex(input);
     if (desired == given) {
         calculateScore(input);
