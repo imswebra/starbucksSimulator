@@ -40,7 +40,12 @@ void round(string prompt, Game& foo) {
         // Check that result.size() > 0;
         // Verify equal phonetic index
         // Calculate awarded points
-        if (result.empty()) break;  // no input to be processed
+        if (result.empty()) {
+            if(t.verify()) {
+                continue;
+            }
+            return;
+        }  // no input to be processed
         foo.processInput(result);
         score = foo.getScore();
     }
