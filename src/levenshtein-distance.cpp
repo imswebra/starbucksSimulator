@@ -44,23 +44,23 @@ int dynamicDL(string& A, string& B) {
     // https://stackoverflow.com/questions/9219712/c-array-expression-must-have-a-constant-value
     int maxdistance = aSize + bSize;
     int** distances = new int*[aSize + 2];
-    for (int i = 0; i <= aSize + 2; i++) {
+    for (int i = 0; i < aSize + 2; i++) {
         distances[i] = new int[bSize + 2];
     }
 
     // Initialize the distances table
     distances[0][0] = maxdistance;
-    for (int i = 1; i <= aSize + 1; i++) {
+    for (int i = 1; i < aSize + 2; i++) {
         distances[i][0] = maxdistance;
         distances[i][1] = i - 1;
     }
-    for (int j = 1; j <= bSize + 1; j++) {
+    for (int j = 1; j < bSize + 2; j++) {
         distances[0][j] = maxdistance;
         distances[1][j] = j - 1;
     }
 
     // Create all distances given the operations on the distances table
-    for (int i = 2; i <= aSize + 2; i++) {
+    for (int i = 2; i < aSize + 2; i++) {
         db = 1;
         for (int j = 2; j < bSize + 2; j++) {
             k = da[B[j-2] - 64] + 1;
@@ -85,15 +85,12 @@ int dynamicDL(string& A, string& B) {
     int c = distances[aSize + 1][bSize + 1];
 
     // Free the memory to prevent leaks
-
-    // for (int i = 0; i <= aSize + 2; i++) {
-    //     delete[] distances[i];
-    //     distances[i] = NULL;
-    // }
-    // delete[] distances;
-    // distances = NULL;
-    // FIXME freeing memory from heap results in double free vulnerability
-
+    for (int i = 0; i < aSize + 2; i++) {
+        delete[] distances[i];
+        distances[i] = NULL;
+    }
+    delete[] distances;
+    distances = NULL;
 
     return c;
 }
