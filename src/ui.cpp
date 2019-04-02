@@ -18,6 +18,7 @@ Final Project: Starbucks Simulator
 #include <ctime>
 
 #include "inputProcessing.h"
+#include "cpu.h"
 
 using namespace std;
 
@@ -116,28 +117,6 @@ int selectScreen(string prompt, vector<string> choiceStrs) {
     clear();
     refresh();
     return result;
-}
-
-
-// Draws the timer
-void Timer::draw(WINDOW* win) {
-    string printStr = to_string(timerVal);
-    printStr.insert(printStr.begin(), 3 - printStr.size(), '0');
-    mvwprintw(win, 0, 0, printStr.c_str());
-    wrefresh(win);
-}
-
-// Verifies the timer and redraws it if it was updated
-void Timer::update(WINDOW* win) {
-    int oldVal = timerVal;
-    timerVal = max - difftime(time(NULL), startTime);
-    if (timerVal == oldVal) return;
-    draw(win);
-;}
-
-// Returns false if the timer is less than zero
-bool Timer::verify() {
-    return timerVal >= 0;
 }
 
 

@@ -15,6 +15,39 @@ Final Project: Starbucks Simulator
 #include <ncurses.h>
 #include <string>
 #include <vector>
+#include <ctime>
+
+
+// --------------- //
+// General Classes //
+// --------------- //
+
+/* Timer class
+Stores all the needed information for updating and verifying the user input
+timer. Initialized with the starting value of the timer and the start time. Note
+that the drawing function right aligns and assumes the value can be expressed in
+three decimal digits.
+*/
+class Timer {
+private:
+    int timerVal; // The current value
+    int max; // The maximum possible value
+    time_t startTime; // The time at initialization
+
+public:
+    // Constructor
+    Timer(int startVal, time_t startTime) : timerVal(startVal), max(startVal),
+                                            startTime(startTime) {}
+
+    // Draws the timer
+    void draw(WINDOW* win);
+
+    // Verifies the timer and redraws it if it was updated
+    void update(WINDOW* win);
+
+    // Returns false if the timer is less than zero
+    bool verify();
+};
 
 
 // -------------------------- //

@@ -19,6 +19,35 @@ Final Project: Starbucks Simulator
 
 using namespace std;
 
+
+// --------------- //
+// General Classes //
+// --------------- //
+
+// Timer Class - Public functions
+
+// Draws the timer
+void Timer::draw(WINDOW* win) {
+    string printStr = to_string(timerVal);
+    printStr.insert(printStr.begin(), 3 - printStr.size(), '0');
+    mvwprintw(win, 0, 0, printStr.c_str());
+    wrefresh(win);
+}
+
+// Verifies the timer and redraws it if it was updated
+void Timer::update(WINDOW* win) {
+    int oldVal = timerVal;
+    timerVal = max - difftime(time(NULL), startTime);
+    if (timerVal == oldVal) return;
+    draw(win);
+;}
+
+// Returns false if the timer is less than zero
+bool Timer::verify() {
+    return timerVal >= 0;
+}
+
+
 // -------------------------- //
 // Menu Functions and Classes //
 // -------------------------- //
