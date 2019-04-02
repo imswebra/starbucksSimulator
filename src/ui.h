@@ -28,7 +28,7 @@ timer. Initialized with the starting value of the timer and the start time. Note
 that the drawing function right aligns and assumes the value can be expressed in
 three decimal digits.
 */
-class timer {
+class Timer {
 private:
     int timerVal; // The current value
     int max; // The maximum possible value
@@ -36,7 +36,7 @@ private:
 
 public:
     // Constructor
-    timer(int startVal, time_t startTime) : timerVal(startVal), max(startVal),
+    Timer(int startVal, time_t startTime) : timerVal(startVal), max(startVal),
                                             startTime(startTime) {}
 
     // Draws the timer
@@ -93,7 +93,7 @@ Args:
 - t: The timer object to be updated
 - score: The score to display
 */
-std::string gameplayScreen(timer& t, int& score);
+std::string gameplayScreen(Timer& t, int& score);
 
 
 /* Results Screen function

@@ -26,16 +26,16 @@ using namespace std;
 // --------- //
 
 // TEMPORARY: Only as a demonstration of the gameplay ui
-void round(string prompt, Game& foo) {
+void round(string prompt, Cpu& game) {
     // Create and draw the prompt
     WINDOW* pWin = createPrompt(prompt);
 
     int score = 0;
     // Draw the rest of the gameplay screen and get the user input
-    timer t(020, time(NULL));
+    Timer t(020, time(NULL));
     while (t.verify()) {
         string result = gameplayScreen(t, score); // Get user input
-        
+
         // Clean result -> Remove spaces and hyphens
         // Check that result.size() > 0;
         if (result.empty()) {
@@ -80,11 +80,11 @@ int main() {
     curs_set(1);
 
     Cpu game(character, opponent);
-    round("Round 1: " + foo.displayName(), foo);
+    round("Round 1: " + game.displayName(), game);
     game.nextName();
-    round("Round 2: " + foo.displayName(), foo);
+    round("Round 2: " + game.displayName(), game);
     game.nextName();
-    round("Round 3: " + foo.displayName(), foo);
+    round("Round 3: " + game.displayName(), game);
 
 
 

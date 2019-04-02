@@ -102,7 +102,7 @@ int selectScreen(string prompt, vector<string> choiceStrs) {
     WINDOW* pWin = createPrompt(prompt);
 
     // Create and draw the choice window
-    choices c(choiceStrs);
+    Choices c(choiceStrs);
     WINDOW* cWin = newwin(1, COLS, 7, 0);
     keypad(cWin, TRUE);
     c.drawAll(cWin);
@@ -119,15 +119,8 @@ int selectScreen(string prompt, vector<string> choiceStrs) {
 }
 
 
-/* Timer class
-Stores all the needed information for updating and verifying the user input
-timer. Initialized with the starting value of the timer and the start time. Note
-that the drawing function right aligns and assumes the value can be expressed in
-three decimal digits.
-*/
-
 // Draws the timer
-void timer::draw(WINDOW* win) {
+void Timer::draw(WINDOW* win) {
     string printStr = to_string(timerVal);
     printStr.insert(printStr.begin(), 3 - printStr.size(), '0');
     mvwprintw(win, 0, 0, printStr.c_str());
@@ -135,7 +128,7 @@ void timer::draw(WINDOW* win) {
 }
 
 // Verifies the timer and redraws it if it was updated
-void timer::update(WINDOW* win) {
+void Timer::update(WINDOW* win) {
     int oldVal = timerVal;
     timerVal = max - difftime(time(NULL), startTime);
     if (timerVal == oldVal) return;
@@ -143,7 +136,7 @@ void timer::update(WINDOW* win) {
 ;}
 
 // Returns false if the timer is less than zero
-bool timer::verify() {
+bool Timer::verify() {
     return timerVal >= 0;
 }
 
@@ -157,7 +150,7 @@ Args:
 - t: The timer object to be updated
 - score: The score to display
 */
-string gameplayScreen(timer& t, int& score) {
+string gameplayScreen(Timer& t, int& score) {
     // Create and draw the time and score window
     WINDOW* tsWin = newwin(1, 9, 5, (COLS - 9) / 2);
     mvwprintw(tsWin, 0, 0, "000 | 000");
@@ -172,7 +165,7 @@ string gameplayScreen(timer& t, int& score) {
     wrefresh(iWin);
 
     // Get input while updating the timer
-    buffer b(50);
+    Buffer b(50);
     while (true) {
         t.update(tsWin); // Update the timer
         if (!t.verify()) break; // Break if out of time

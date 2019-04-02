@@ -27,7 +27,7 @@ position is calculated and stored. The currently selected choice can be updated
 using the various 'select' methods, and drawn using drawSelect. All of the
 choices can also be drawn at once using drawAll.
 */
-class choices {
+class Choices {
 private:
     /* Calculate Position function
     Based on the strings lengths and the total number of strings, this function
@@ -49,7 +49,7 @@ private:
 
 public:
     // Constructor
-    choices(std::vector<std::string> strings);
+    Choices(std::vector<std::string> strings);
 
     int getSelect();
 
@@ -83,7 +83,7 @@ for selecting an option. Supports left and right arrow keys or 'a' and 'd' for
 lateral movement, or numbers 1-9 for quick selection, with 'Enter' for
 confirmation. Returns a index value corresponding to the chosen option.
 */
-int processMenu(WINDOW* cWin, choices c) ;
+int processMenu(WINDOW* cWin, Choices c) ;
 
 
 // ------------------------------------ //
@@ -96,7 +96,7 @@ maximum size of the string (passed in the constructor) and the location of the
 cursor. Contains all the methods needed by processKeyboard to allow the
 insertion and deletion of characters and the movement of the cursor.
 */
-class buffer {
+class Buffer {
 private:
     std::string str; // The "buffer" in which characters are stored
     unsigned int maxSize; // Maximum size of the string
@@ -107,7 +107,7 @@ private:
 
 public:
     // Constructor
-    buffer(unsigned int maxSize);
+    Buffer(unsigned int maxSize);
 
     std::string getBuffer();
 
@@ -144,6 +144,6 @@ Args:
 - iWin: The input window to update
 - b: The buffer to update
 */
-bool processKeyboard(WINDOW* iWin, buffer& b);
+bool processKeyboard(WINDOW* iWin, Buffer& b);
 
 #endif
