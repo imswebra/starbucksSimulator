@@ -35,13 +35,20 @@ void round(string prompt, Game& foo) {
     timer t(020, time(NULL));
     while (t.verify()) {
         string result = gameplayScreen(t, score); // Get user input
-        // Check that result.size() > 0;
         // Clean result -> Remove spaces and hyphens
         // Check that result.size() > 0;
+
+        if (result.empty()) {
+            if(t.verify()) {
+                continue;
+            }
+            return;
+        }  // no input to be processed
+
         // Verify equal phonetic index
-        // Calculate awarded points
-        if (result.empty()) break;  // no input to be processed
         foo.processInput(result);
+
+        // Calculate awarded points
         score = foo.getScore();
     }
 
@@ -78,6 +85,8 @@ int main() {
     round("Round 2: " + foo.displayName(), foo);
     foo.nextName();
     round("Round 3: " + foo.displayName(), foo);
+
+
 
     // Cleanup
     endwin();
