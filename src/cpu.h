@@ -13,9 +13,9 @@ Final Project: Starbucks Simulator
 #include <vector>
 
 
-class Game {
+class Cpu {
 public:
-    Game(int c, int o);
+    Cpu(int c, int o);
 
     void nextName();
 

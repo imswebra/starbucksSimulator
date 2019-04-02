@@ -35,9 +35,9 @@ void round(string prompt, Game& foo) {
     timer t(020, time(NULL));
     while (t.verify()) {
         string result = gameplayScreen(t, score); // Get user input
+        
         // Clean result -> Remove spaces and hyphens
         // Check that result.size() > 0;
-
         if (result.empty()) {
             if(t.verify()) {
                 continue;
@@ -46,19 +46,10 @@ void round(string prompt, Game& foo) {
         }  // no input to be processed
 
         // Verify equal phonetic index
+        game.processInput(result);
 
         // Calculate awarded points
-        if (result.empty()) {
-            if(t.verify()) {
-                continue;
-            }
-            return;
-        }  // no input to be processed
-
-        foo.processInput(result);
-
-        // Calculate awarded points
-        score = foo.getScore();
+        score = game.getScore();
     }
 
     // Cleanup
@@ -88,11 +79,11 @@ int main() {
                                 {"Character 0", "Character 1", "Character 2"});
     curs_set(1);
 
-    Game foo(character, opponent);
+    Cpu game(character, opponent);
     round("Round 1: " + foo.displayName(), foo);
-    foo.nextName();
+    game.nextName();
     round("Round 2: " + foo.displayName(), foo);
-    foo.nextName();
+    game.nextName();
     round("Round 3: " + foo.displayName(), foo);
 
 

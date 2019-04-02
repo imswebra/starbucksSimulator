@@ -21,7 +21,7 @@ using namespace std;
 
 
 
-Game::Game(int c, int o) {
+Cpu::Cpu(int c, int o) {
     // Set the selected "player" as the selected list of names
     this->nameList = c;
     // Set the selected "opponent" as the chosen phonetic algorithm
@@ -35,7 +35,7 @@ Game::Game(int c, int o) {
     this->currentName = this->names[0];
 }
 
-void Game::nextName() {
+void Cpu::nextName() {
     if(index < this->names.size()){
         this->index++;
         this->currentName = this->names[this->index];
@@ -45,15 +45,15 @@ void Game::nextName() {
     }
 }
 
-string Game::displayName() {
+string Cpu::displayName() {
     return this->currentName;
 }
 
-int Game::getScore() {
+int Cpu::getScore() {
     return this->score;
 }
 
-void Game::processInput(string input) {
+void Cpu::processInput(string input) {
     string desired = soundex(this->currentName);
     string given = soundex(input);
     if (desired == given) {
@@ -61,6 +61,6 @@ void Game::processInput(string input) {
     }
 }
 
-void Game::calculateScore(string A) {
+void Cpu::calculateScore(string A) {
     this->score = dynamicDL(this->currentName, A);
 }
