@@ -17,7 +17,7 @@ Final Project: Starbucks Simulator
 #include <vector>
 #include <ctime>
 
-#include "inputProcessing.h"
+#include "uiHelper.h"
 #include "cpu.h"
 
 using namespace std;

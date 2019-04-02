@@ -10,7 +10,7 @@ Final Project: Starbucks Simulator
 // ------------------------ //
 // Includes and Definitions //
 // ------------------------ //
-#include "inputProcessing.h"
+#include "uiHelper.h"
 
 #include <ncurses.h>
 #include <string>

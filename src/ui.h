@@ -16,6 +16,8 @@ Final Project: Starbucks Simulator
 #include <string>
 #include <vector>
 
+#include "uiHelper.h"
+
 
 // --------- //
 // Functions //

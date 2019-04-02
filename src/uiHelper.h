@@ -1,5 +1,5 @@
-#ifndef _INPUTPROCESSING_H_
-#define _INPUTPROCESSING_H_
+#ifndef _UIHELPER_H_
+#define _UIHELPER_H_
 /*
 Author: Eric Claerhout, Henry Lin
 Student ID: 1532360, 1580649
