@@ -95,4 +95,10 @@ Args:
 */
 std::string gameplayScreen(timer& t, int& score);
 
+
+/* Results Screen function
+Placeholder for results screen with leaderboards, initial input, and play again.
+*/
+void resultsScreen(int& score);
+
 #endif

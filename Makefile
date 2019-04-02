@@ -10,7 +10,7 @@ VPATH = $(SRC_DIR)
 
 # Program and Objects
 PROGRAM = starbucksSimulator
-OBJS = starbucksSimulator.o ui.o
+OBJS = starbucksSimulator.o ui.o inputProcessing.o
 
 
 ###############
@@ -22,7 +22,10 @@ $(PROGRAM): $(OBJ_DIR) $(addprefix $(OBJ_DIR)/,$(OBJS))
 $(OBJ_DIR)/starbucksSimulator.o: starbucksSimulator.cpp ui.h
 	$(CC) $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/ui.o: ui.cpp ui.h
+$(OBJ_DIR)/ui.o: ui.cpp ui.h inputProcessing.h
+	$(CC) $< -o $@ $(CFLAGS)
+
+$(OBJ_DIR)/inputProcessing.o: inputProcessing.cpp inputProcessing.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 
