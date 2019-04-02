@@ -14,26 +14,19 @@ Final Project: Starbucks Simulator
 
 
 class Cpu {
-public:
-    Cpu(int c, int o);
-
-    void nextName();
-
-    void processInput(std::string input);
-
-    int getScore();
-
-    std::string displayName();
-
 private:
-
     std::string currentName;
     unsigned int index;
-    int opponent;
     int nameList;
-    int score;
+    int opponent;
+    int score = 0;
 
-
+    /* Calculate Score function
+    Only called when the phonetics of the current name and the input string are the
+    same.
+    Calculates the score as a Damerau Levenshtein distance and sets it to
+    this->score.
+    */
     void calculateScore(std::string input);
 
     std::vector<std::string> names = {  // Placeholder before being able to obtain names from CSV
@@ -46,6 +39,33 @@ private:
         "Jocelyn",
         "Kaitlyn",
     };
+
+public:
+    // Constructor
+    Cpu(int c, int o);
+
+    /* Next Name function
+    Checks if reached end of list, if not then it sets currentName to the next name
+    on the list
+    */
+    void nextName();
+
+    /* Process Input function
+    Given an input as a string, checks using the chosen phonetic algorithm whether
+    it matches with the phonetics of the given/current name.
+    If the given string matches with the phonetics, then a score is calculated.
+    */
+    void processInput(std::string input);
+
+    /* Get Score function
+    Retrieves the calculated score, if no score has been calculated score = 0
+    */
+    int getScore();
+
+    /* Display Name function
+    Returns the current name as a std::string
+    */
+    std::string displayName();
 };
 
 
