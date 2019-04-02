@@ -85,12 +85,14 @@ int dynamicDL(string& A, string& B) {
     int c = distances[aSize + 1][bSize + 1];
 
     // Free the memory to prevent leaks
+
     for (int i = 0; i < aSize + 2; i++) {
         delete[] distances[i];
         distances[i] = NULL;
     }
     delete[] distances;
     distances = NULL;
+
 
     return c;
 }

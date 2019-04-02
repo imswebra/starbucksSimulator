@@ -46,6 +46,15 @@ void round(string prompt, Game& foo) {
         }  // no input to be processed
 
         // Verify equal phonetic index
+
+        // Calculate awarded points
+        if (result.empty()) {
+            if(t.verify()) {
+                continue;
+            }
+            return;
+        }  // no input to be processed
+
         foo.processInput(result);
 
         // Calculate awarded points
