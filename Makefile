@@ -10,7 +10,7 @@ VPATH = $(SRC_DIR)
 
 # Program and Objects
 PROGRAM = starbucksSimulator
-OBJS = starbucksSimulator.o ui.o inputProcessing.o
+OBJS = starbucksSimulator.o ui.o inputProcessing.o preprocess.o levenshtein-distance.o soundex.o cpu.o
 
 
 ###############
@@ -19,13 +19,25 @@ OBJS = starbucksSimulator.o ui.o inputProcessing.o
 $(PROGRAM): $(OBJ_DIR) $(addprefix $(OBJ_DIR)/,$(OBJS))
 	$(CC) $(addprefix $(OBJ_DIR)/,$(OBJS)) -o $(PROGRAM) $(LFLAGS)
 
-$(OBJ_DIR)/starbucksSimulator.o: starbucksSimulator.cpp ui.h
+$(OBJ_DIR)/starbucksSimulator.o: starbucksSimulator.cpp ui.h cpu.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/ui.o: ui.cpp ui.h inputProcessing.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/inputProcessing.o: inputProcessing.cpp inputProcessing.h
+	$(CC) $< -o $@ $(CFLAGS)
+
+$(OBJ_DIR)/preprocess.o: preprocess.cpp preprocess.h
+	$(CC) $< -o $@ $(CFLAGS)
+
+$(OBJ_DIR)/levenshtein-distance.o: levenshtein-distance.cpp levenshtein-distance.h preprocess.h
+	$(CC) $< -o $@ $(CFLAGS)
+
+$(OBJ_DIR)/soundex.o: soundex.cpp soundex.h preprocess.h
+	$(CC) $< -o $@ $(CFLAGS)
+
+$(OBJ_DIR)/cpu.o: cpu.cpp cpu.h levenshtein-distance.h soundex.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 

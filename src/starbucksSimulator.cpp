@@ -16,6 +16,7 @@ Final Project: Starbucks Simulator
 #include <unistd.h> // For sleep
 
 #include "ui.h"
+#include "cpu.h"
 
 using namespace std;
 
@@ -25,21 +26,30 @@ using namespace std;
 // --------- //
 
 // TEMPORARY: Only as a demonstration of the gameplay ui
-void round(string prompt) {
+void round(string prompt, Game& foo) {
     // Create and draw the prompt
     WINDOW* pWin = createPrompt(prompt);
 
-    int score = 107;
-
+    int score = 0;
     // Draw the rest of the gameplay screen and get the user input
     timer t(020, time(NULL));
     while (t.verify()) {
         string result = gameplayScreen(t, score); // Get user input
-        // Check that result.size() > 0;
+        
         // Clean result -> Remove spaces and hyphens
         // Check that result.size() > 0;
+        if (result.empty()) {
+            if(t.verify()) {
+                continue;
+            }
+            return;
+        }  // no input to be processed
+
         // Verify equal phonetic index
+        game.processInput(result);
+
         // Calculate awarded points
+        score = game.getScore();
     }
 
     // Cleanup
@@ -69,9 +79,14 @@ int main() {
                                 {"Character 0", "Character 1", "Character 2"});
     curs_set(1);
 
-    round("Round 1: Henry");
-    round("Round 2: Eric");
-    round("Round 3: Ryan");
+    Cpu game(character, opponent);
+    round("Round 1: " + foo.displayName(), foo);
+    game.nextName();
+    round("Round 2: " + foo.displayName(), foo);
+    game.nextName();
+    round("Round 3: " + foo.displayName(), foo);
+
+
 
     // Cleanup
     endwin();
