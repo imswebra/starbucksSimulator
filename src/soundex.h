@@ -9,8 +9,28 @@ Final Project: Starbucks Simulator
 #########################################
 */
 
+// -------- //
+// Includes //
+// -------- //
 #include <string>
 
+
+// --------- //
+// Functions //
+// --------- //
+
+/* Soundex function
+Returns the Soundex encoding of the given string. Based off the Wikipedia
+pseudocode. Operates in O(n) complexity.
+*/
 std::string soundex(std::string name);
+
+
+/* NYSIIS function
+Returns the New York State Identification and Intelligence System encoding of
+the given string. Based off the Wikipedia pseudocode. Has a best case complexity
+of O(n) and a worse case complexity of O(n^2).
+*/
+std::string nysiis(std::string name);
 
 #endif
