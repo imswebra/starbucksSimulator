@@ -64,6 +64,8 @@ it matches with the phonetics of the given/current name.
 If the given string matches with the phonetics, then a score is calculated.
 */
 void Cpu::processInput(string input) {
+    // FIXME Add input cleaning function
+    
     string desired = soundex(this->currentName);
     string given = soundex(input);
     if (desired == given) {

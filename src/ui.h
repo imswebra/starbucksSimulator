@@ -62,7 +62,7 @@ Args:
 - t: The timer object to be updated
 - score: The score to display
 */
-std::string gameplayScreen(Timer& t, int& score);
+std::string gameplayScreen(Timer& t, int score);
 
 
 /* Results Screen function

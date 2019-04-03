@@ -16,6 +16,7 @@ Final Project: Starbucks Simulator
 #include <unistd.h> // For sleep
 
 #include "ui.h"
+#include "uiHelper.h" // For Timer class
 #include "cpu.h"
 
 using namespace std;
@@ -25,32 +26,29 @@ using namespace std;
 // Functions //
 // --------- //
 
-// TEMPORARY: Only as a demonstration of the gameplay ui
-void round(string prompt, Cpu& game) {
+void round(string prompt, Cpu& game, int& score) {
+    // Initialize variables
+    Timer t(30, time(NULL));
+    int roundScore = 0;
+
     // Create and draw the prompt
     WINDOW* pWin = createPrompt(prompt);
 
-    int score = 0;
     // Draw the rest of the gameplay screen and get the user input
-    Timer t(020, time(NULL));
     while (t.verify()) {
-        string result = gameplayScreen(t, score); // Get user input
-
-        // Clean result -> Remove spaces and hyphens
-        // Check that result.size() > 0;
-        if (result.empty()) {
-            if(t.verify()) {
-                continue;
-            }
-            return;
-        }  // no input to be processed
+        string input = gameplayScreen(t, roundScore + score);
+        if (input.empty()) { continue; }
 
         // Verify equal phonetic index
-        game.processInput(result);
+        game.processInput(input);
 
         // Calculate awarded points
-        score = game.getScore();
+        int inputScore = game.getScore();
+        if (inputScore > roundScore) { roundScore = inputScore; }
     }
+
+    // Update game score with the final round score
+    score += roundScore;
 
     // Cleanup
     delwin(pWin);
@@ -80,13 +78,15 @@ int main() {
     curs_set(1);
 
     Cpu game(character, opponent);
-    round("Round 1: " + game.displayName(), game);
+    int score = 0;
+    round("Round 1: " + game.displayName(), game, score);
     game.nextName();
-    round("Round 2: " + game.displayName(), game);
+    round("Round 2: " + game.displayName(), game, score);
     game.nextName();
-    round("Round 3: " + game.displayName(), game);
+    round("Round 3: " + game.displayName(), game, score);
 
-
+    curs_set(0);
+    resultsScreen(score);
 
     // Cleanup
     endwin();

@@ -129,12 +129,16 @@ Args:
 - t: The timer object to be updated
 - score: The score to display
 */
-string gameplayScreen(Timer& t, int& score) {
+string gameplayScreen(Timer& t, int score) {
     // Create and draw the time and score window
     WINDOW* tsWin = newwin(1, 9, 5, (COLS - 9) / 2);
     mvwprintw(tsWin, 0, 0, "000 | 000");
     t.draw(tsWin);
-    mvwprintw(tsWin, 0, 6, to_string(score).c_str());
+
+    string printScore = to_string(score);
+    printScore.insert(printScore.begin(), 3 - printScore.size(), '0');
+    mvwprintw(tsWin, 0, 6, printScore.c_str());
+
     wrefresh(tsWin);
 
     // Create and draw the input window
