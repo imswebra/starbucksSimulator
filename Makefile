@@ -1,7 +1,7 @@
 # Author: Eric Claerhout, Henry Lin
 # Student ID: 1532360, 1580649
 # CMPUT 275 Winter 2019
-# 
+#
 # Final Project: Starbucks Simulator
 # ##################################
 
@@ -18,7 +18,7 @@ VPATH = $(SRC_DIR):$(SRC_DIR)/$(ALGS_DIR)
 
 # Program and Objects
 PROGRAM = starbucksSimulator
-OBJS = starbucksSimulator.o ui.o uiHelper.o preprocess.o levenshtein-distance.o soundex.o cpu.o
+OBJS = starbucksSimulator.o ui.o uiHelper.o cpu.o preprocess.o levenshtein-distance.o soundex.o nysiis.o
 
 
 ###############
@@ -36,6 +36,9 @@ $(OBJ_DIR)/ui.o: ui.cpp ui.h uiHelper.h
 $(OBJ_DIR)/uiHelper.o: uiHelper.cpp uiHelper.h
 	$(CC) $< -o $@ $(CFLAGS)
 
+$(OBJ_DIR)/cpu.o: cpu.cpp cpu.h levenshtein-distance.h soundex.h
+	$(CC) $< -o $@ $(CFLAGS)
+
 $(OBJ_DIR)/preprocess.o: preprocess.cpp preprocess.h
 	$(CC) $< -o $@ $(CFLAGS)
 
@@ -45,7 +48,7 @@ $(OBJ_DIR)/levenshtein-distance.o: levenshtein-distance.cpp levenshtein-distance
 $(OBJ_DIR)/soundex.o: soundex.cpp soundex.h preprocess.h
 	$(CC) $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/cpu.o: cpu.cpp cpu.h levenshtein-distance.h soundex.h
+$(OBJ_DIR)/nysiis.o: nysiis.cpp nysiis.h preprocess.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 
