@@ -14,7 +14,7 @@ Final Project: Starbucks Simulator
 #include <random>
 
 #include "levenshtein-distance.h"
-#include "soundex.h"
+#include "algs/soundex.h"
 
 #include <iostream>  // for debugging
 using namespace std;
@@ -65,7 +65,7 @@ If the given string matches with the phonetics, then a score is calculated.
 */
 void Cpu::processInput(string input) {
     // FIXME Add input cleaning function
-    
+
     string desired = soundex(this->currentName);
     string given = soundex(input);
     if (desired == given) {

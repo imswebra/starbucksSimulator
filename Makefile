@@ -1,3 +1,10 @@
+# Author: Eric Claerhout, Henry Lin
+# Student ID: 1532360, 1580649
+# CMPUT 275 Winter 2019
+# 
+# Final Project: Starbucks Simulator
+# ##################################
+
 # Compiler Settings
 CC = g++
 CFLAGS = -c -Wall -O2 -std=c++11
@@ -5,8 +12,9 @@ LFLAGS = -lncurses
 
 # Directories
 SRC_DIR = src
+ALGS_DIR = algs
 OBJ_DIR = obj
-VPATH = $(SRC_DIR)
+VPATH = $(SRC_DIR):$(SRC_DIR)/$(ALGS_DIR)
 
 # Program and Objects
 PROGRAM = starbucksSimulator
