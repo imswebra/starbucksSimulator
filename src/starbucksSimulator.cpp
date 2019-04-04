@@ -84,9 +84,9 @@ int main() {
         titleScreen();
 
         int character = selectScreen("Choose your fighter",
-                                     {"Names 0", "Names 1", "Names 2"});
+                                 {"1800s names", "1950s names", "2000s names"});
         int opponent = selectScreen("Choose your rival",
-                                 {"Character 0", "Character 1", "Character 2"});
+                                 {"Soundex", "NYSIIS", "Metaphone"});
 
         Cpu game(character, opponent);
         int score = 0;
