@@ -78,8 +78,12 @@ std::string gameplayScreen(Timer& t, int score, const std::string& message);
 
 
 /* Results Screen function
-Placeholder for results screen with leaderboards, initial input, and play again.
+Draws the game score and asks the player if they would like to play again.
+Returns true if "Play Again" was chosen, otherwise false.
+
+Args:
+- score: The score to be displayed
 */
-void resultsScreen(int& score);
+bool resultsScreen(int& score);
 
 #endif

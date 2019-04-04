@@ -28,7 +28,7 @@ using namespace std;
 
 void round(string prompt, Cpu& game, int& score) {
     // Initialize variables
-    Timer t(90, time(NULL));
+    Timer t(45, time(NULL));
     int roundScore = 0;
     string resultsMessage = "";
 
@@ -79,29 +79,31 @@ int main() {
     cbreak();
     noecho();
 
-    curs_set(0);
-    titleScreen();
+    while (true) {
+        curs_set(0);
+        titleScreen();
 
-    int character = selectScreen("Choose your fighter",
-                                 {"Names 0", "Names 1", "Names 2"});
-    int opponent = selectScreen("Choose your rival",
-                                {"Character 0", "Character 1", "Character 2"});
+        int character = selectScreen("Choose your fighter",
+                                     {"Names 0", "Names 1", "Names 2"});
+        int opponent = selectScreen("Choose your rival",
+                                 {"Character 0", "Character 1", "Character 2"});
 
-    Cpu game(character, opponent);
-    int score = 0;
+        Cpu game(character, opponent);
+        int score = 0;
 
-    readyScreen(1, score);
-    round("Round 1: " + game.displayName(), game, score);
+        readyScreen(1, score);
+        round("Round 1: " + game.displayName(), game, score);
 
-    game.nextName();
-    readyScreen(2, score);
-    round("Round 2: " + game.displayName(), game, score);
+        game.nextName();
+        readyScreen(2, score);
+        round("Round 2: " + game.displayName(), game, score);
 
-    game.nextName();
-    readyScreen(3, score);
-    round("Round 3: " + game.displayName(), game, score);
+        game.nextName();
+        readyScreen(3, score);
+        round("Round 3: " + game.displayName(), game, score);
 
-    resultsScreen(score);
+        if (!resultsScreen(score)) { break; }
+    }
 
     // Cleanup
     endwin();

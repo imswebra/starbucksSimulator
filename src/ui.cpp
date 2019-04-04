@@ -216,21 +216,30 @@ string gameplayScreen(Timer& t, int score, const string& message) {
 
 
 /* Results Screen function
-Placeholder for results screen with leaderboards, initial input, and play again.
+Draws the game score and asks the player if they would like to play again.
+Returns true if "Play Again" was chosen, otherwise false.
+
+Args:
+- score: The score to be displayed
 */
-void resultsScreen(int& score) {
+bool resultsScreen(int& score) {
+    // Draw score window
     WINDOW* sWin = createPrompt("Your score was: " + to_string(score));
 
-    // Draw Press Enter
-    attron(A_STANDOUT);
-    mvprintw(10, (COLS - 11) / 2, "Press Enter");
-    attroff(A_STANDOUT);
-    refresh();
+    // Create and draw the choice window
+    Choices c(vector<string> {"Play Again", "Quit"});
+    WINDOW* cWin = newwin(1, COLS, 7, 0);
+    keypad(cWin, TRUE);
+    c.drawAll(cWin);
 
-    // Wait for enter
-    int key = 0;
-    while (key != 10) key = getch();
+    // Get user choice
+    int result = processMenu(cWin, c);
 
     // Cleanup
     delwin(sWin);
+    delwin(cWin);
+    clear();
+    refresh();
+    if (result == 0) { return true; }
+    return false;
 }
