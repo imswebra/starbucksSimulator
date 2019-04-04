@@ -101,7 +101,7 @@ string phonetic(string name) {
 
     int  ii, jj, silent, hard, Lng, lastChr;
     string metaph;
-    unsigned int metalen = 20;
+    unsigned int metalen = 50;
     char curLtr, prevLtr, nextLtr, nextLtr2, nextLtr3;
 
     int vowelAfter, vowelBefore, frontvAfter;
@@ -376,7 +376,7 @@ string metaphone(string s) {
 
     // Clean up the outputted metaphone string
     for (unsigned int i = 0; i < s.length(); i++) {
-        if (isalnum(s[i])) {
+        if (isalnum(s[i]) && isupper(s[i])) {
             metaphone += s[i];
         }
     }
