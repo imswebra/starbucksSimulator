@@ -121,15 +121,16 @@ int selectScreen(string prompt, vector<string> choiceStrs) {
 
 
 /* Gameplay Screen function
-Draws the timer, score and input windows, processes the user input, and updates
-the timer accordingly. Returns the string typed by the user when enter is
-pressed, or the partial string within the buffer if the timer runs out.
+Draws the timer, score, message and input windows, processes the user input, and
+updates the timer accordingly. Returns the string typed by the user when enter
+is pressed, or the partial string within the buffer if the timer runs out.
 
 Args:
 - t: The timer object to be updated
 - score: The score to display
+- message: The message to display
 */
-string gameplayScreen(Timer& t, int score) {
+string gameplayScreen(Timer& t, int score, const string& message) {
     // Create and draw the time and score window
     WINDOW* tsWin = newwin(1, 9, 5, (COLS - 9) / 2);
     mvwprintw(tsWin, 0, 0, "000 | 000");
@@ -138,8 +139,12 @@ string gameplayScreen(Timer& t, int score) {
     string printScore = to_string(score);
     printScore.insert(printScore.begin(), 3 - printScore.size(), '0');
     mvwprintw(tsWin, 0, 6, printScore.c_str());
-
     wrefresh(tsWin);
+
+    // Create and draw the message window
+    WINDOW* mWin = newwin(1, message.size(), 9, (COLS - message.size()) / 2);
+    mvwprintw(mWin, 0, 0, message.c_str());
+    wrefresh(mWin);
 
     // Create and draw the input window
     WINDOW* iWin = newwin(1, 50, 7, (COLS - 50) / 2);
@@ -158,6 +163,8 @@ string gameplayScreen(Timer& t, int score) {
 
     // Cleanup
     delwin(tsWin);
+    wclear(mWin);
+    delwin(mWin);
     delwin(iWin);
     return b.getBuffer();
 }

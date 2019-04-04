@@ -30,13 +30,14 @@ void round(string prompt, Cpu& game, int& score) {
     // Initialize variables
     Timer t(30, time(NULL));
     int roundScore = 0;
+    string resultsMessage = "";
 
     // Create and draw the prompt
     WINDOW* pWin = createPrompt(prompt);
 
     // Draw the rest of the gameplay screen and get the user input
     while (t.verify()) {
-        string input = gameplayScreen(t, roundScore + score);
+        string input = gameplayScreen(t, roundScore + score, resultsMessage);
         if (input.empty()) { continue; }
 
         // Verify equal phonetic index
@@ -44,7 +45,17 @@ void round(string prompt, Cpu& game, int& score) {
 
         // Calculate awarded points
         int inputScore = game.getScore();
-        if (inputScore > roundScore) { roundScore = inputScore; }
+        if (inputScore == 0) resultsMessage = "Doesn't sound the same!";
+        else if (inputScore > roundScore) {
+            resultsMessage = "Score of " + to_string(inputScore)
+                              + ", +" + to_string(inputScore - roundScore)
+                              + " points!";
+            roundScore = inputScore;
+        }
+        else if (inputScore <= roundScore) {
+            resultsMessage = "Score of " + to_string(inputScore)
+                              + ", but not bigger than your best this round!";
+        }
     }
 
     // Update game score with the final round score

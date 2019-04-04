@@ -54,15 +54,16 @@ WINDOW* createPrompt(std::string prompt);
 
 
 /* Gameplay Screen function
-Draws the timer, score and input windows, processes the user input, and updates
-the timer accordingly. Returns the string typed by the user when enter is
-pressed, or the partial string within the buffer if the timer runs out.
+Draws the timer, score, message and input windows, processes the user input, and
+updates the timer accordingly. Returns the string typed by the user when enter
+is pressed, or the partial string within the buffer if the timer runs out.
 
 Args:
 - t: The timer object to be updated
 - score: The score to display
+- message: The message to display
 */
-std::string gameplayScreen(Timer& t, int score);
+std::string gameplayScreen(Timer& t, int score, const std::string& message);
 
 
 /* Results Screen function
