@@ -6,6 +6,10 @@ CMPUT 275 Winter 2019
 Final Project: Starbucks Simulator
 #########################################
 */
+
+// ------------------------ //
+// Includes and Definitions //
+// ------------------------ //
 #include "cpu.h"
 
 #include <string>
@@ -22,6 +26,11 @@ Final Project: Starbucks Simulator
 
 #include <iostream>  // for debugging
 using namespace std;
+
+
+// ------------- //
+// Class Methods //
+// ------------- //
 
 // Private methods
 
@@ -63,20 +72,20 @@ void Cpu::makeNames(string filename) {
     inputFile.close();
 }
 
-//Public methods
+// Public methods
 
 // Constructor
 Cpu::Cpu(int c, int o) : nameList(c), opponent(o) {
     // Construct the name list
     switch (this->nameList) {
         case 0:
-            makeNames("1880s names.csv");
+            makeNames("data/1880s.csv");
             break;
         case 1:
-            makeNames("1950s names.csv");
+            makeNames("data/1950s.csv");
             break;
         case 2:
-            makeNames("2000s names.csv");
+            makeNames("data/2000s.csv");
             break;
     }
     // Get the first name on the shuffled list
