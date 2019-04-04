@@ -18,7 +18,7 @@ VPATH = $(SRC_DIR):$(SRC_DIR)/$(ALGS_DIR)
 
 # Program and Objects
 PROGRAM = starbucksSimulator
-OBJS = starbucksSimulator.o ui.o uiHelper.o cpu.o preprocess.o levenshtein-distance.o soundex.o nysiis.o
+OBJS = starbucksSimulator.o ui.o uiHelper.o cpu.o preprocess.o levenshtein-distance.o soundex.o nysiis.o metaphone.o
 
 
 ###############
@@ -49,6 +49,9 @@ $(OBJ_DIR)/soundex.o: soundex.cpp soundex.h preprocess.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/nysiis.o: nysiis.cpp nysiis.h preprocess.h
+	$(CC) $< -o $@ $(CFLAGS)
+
+$(OBJ_DIR)/metaphone.o: metaphone.cpp metaphone.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 
