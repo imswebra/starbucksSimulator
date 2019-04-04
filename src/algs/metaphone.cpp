@@ -88,17 +88,18 @@ using namespace std;
 #define FALSE (0)
 #define NULLCHAR (char *) 0
 
-char VOWELS[]="AEIOU",
-     FRONTV[]="EIY",   /* special cases for letters in FRONT of these */
-     VARSON[]="CSPTG", /* variable sound--those modified by adding an "h"    */
-     DOUBLE[]=".";     /* let these double letters through */
 
-char excpPAIR[]="AGKPW", /* exceptions "ae-", "gn-", "kn-", "pn-", "wr-" */
-     nextLTR[] ="ENNNR";
-char *chrptr, *chrptr1;
 
 string phonetic(string name) {
+    char VOWELS[]="AEIOU",
+         FRONTV[]="EIY",   /* special cases for letters in FRONT of these */
+         VARSON[]="CSPTG", /* variable sound--those modified by adding an "h"    */
+         DOUBLE[]=".";     /* let these double letters through */
 
+    char excpPAIR[]="AGKPW", /* exceptions "ae-", "gn-", "kn-", "pn-", "wr-" */
+         nextLTR[] ="ENNNR";
+    char *chrptr, *chrptr1;
+    
     int  ii, jj, silent, hard, Lng, lastChr;
     string metaph;
     unsigned int metalen = 50;
