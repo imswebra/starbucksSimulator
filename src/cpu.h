@@ -29,16 +29,9 @@ private:
     */
     void calculateScore(std::string input);
 
-    std::vector<std::string> names = {  // Placeholder before being able to obtain names from CSV
-        "Henry",
-        "Joseph",
-        "Erica",
-        "Mark",
-        "Stephen",
-        "Geoff",
-        "Jocelyn",
-        "Kaitlyn",
-    };
+    void makeNames(std::string filename);
+
+    std::vector<std::string> names;
 
 public:
     // Constructor
