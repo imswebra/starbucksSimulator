@@ -38,8 +38,10 @@ void round(string prompt, Cpu& game, int& score) {
     // Draw the rest of the gameplay screen and get the user input
     while (t.verify()) {
         string input = gameplayScreen(t, roundScore + score, resultsMessage);
-        if (input.empty()) { continue; }
-        if (input == game.displayName()) { continue; }
+        if (input.empty() || input == game.displayName()) {
+            resultsMessage = "";
+            continue;
+        }
 
         // Verify equal phonetic index
         game.processInput(input);
@@ -71,7 +73,7 @@ void round(string prompt, Cpu& game, int& score) {
 // Main function
 int main() {
     cout << "Starbucks Simulator Starting..." << endl;
-    system("resize -s 12 55"); // Terminal dependent
+    if(system("resize -s 12 55")); // Terminal dependent
     sleep(1);
 
     // Ncurses initialization
