@@ -25,8 +25,11 @@ Final Project: Starbucks Simulator
 #include "algs/metaphone.h"
 
 #include <iostream>  // for debugging
+
 using namespace std;
 
+// Debug Flag
+bool debug = true;
 
 // ------------- //
 // Class Methods //
@@ -144,7 +147,7 @@ If the given string matches with the phonetics, then a score is calculated.
 void Cpu::processInput(string input) {
     string desired, given;
     cleanInput(input);
-    
+
     switch(this->opponent) {
         case 0:
             desired = soundex(this->currentName);
@@ -159,7 +162,17 @@ void Cpu::processInput(string input) {
             given = metaphone(input);
             break;
     }
+    // debug flag
+    if(dFlag) {
+        char trash;
+        cout << desired << " " << given << endl;
+        // VERY LOW LEVEL WAIT COMMAND
+        cin >> trash;
+    }
     if (desired == given) {
         calculateScore(input);
+    }
+    else {
+        this->score = 0;
     }
 }

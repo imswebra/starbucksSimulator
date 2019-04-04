@@ -15,6 +15,7 @@ Final Project: Starbucks Simulator
 
 class Cpu {
 private:
+    bool dFlag = false;  // debugging
     std::string currentName;
     unsigned int index;
     int nameList;
