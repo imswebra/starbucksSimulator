@@ -12,19 +12,73 @@ Final Project: Starbucks Simulator
 #include <algorithm>  // for random_shuffle
 #include <vector>
 #include <random>
+#include <fstream>
+#include <ctime>
 
 #include "levenshtein-distance.h"
 #include "algs/soundex.h"
+#include "algs/nysiis.h"
+#include "algs/metaphone.h"
 
 #include <iostream>  // for debugging
 using namespace std;
 
+// Private methods
+
+/* Calculate Score function
+Only called when the phonetics of the current name and the input string are the
+same.
+Calculates the score as a Damerau Levenshtein distance and sets it to
+this->score.
+*/
+void Cpu::calculateScore(string A) {
+    this->score = dynamicDL(this->currentName, A);
+}
+
+/* Make Names function
+Opens the given filename and adds 5 random lines to the names vector
+*/
+void Cpu::makeNames(string filename) {
+    // Initial declarations
+    srand (time(NULL));
+    ifstream inputFile(filename);
+    string readLine;
+    string readWord;
+    int lineNum = 0;
+    int random;
+    for (int i = 0; i < 5; i++) {
+        random = rand() % 100 + 1;  // between 1 - 100
+        while (lineNum < 100) {
+            getline(inputFile, readLine);
+            if (random == lineNum) {
+                this->names.push_back(readLine);
+                break;
+            }
+            lineNum++;
+        }
+        inputFile.clear();
+        inputFile.seekg(0, ios_base::beg);  // set the stream back to start of file
+        lineNum = 0;
+    }
+    inputFile.close();
+}
+
+//Public methods
 
 // Constructor
 Cpu::Cpu(int c, int o) : nameList(c), opponent(o) {
-    // Shuffle the current name list
-    auto gen = std::default_random_engine {};
-    shuffle(this->names.begin(), this->names.end(), gen);  // array, array+SIZE
+    // Construct the name list
+    switch (this->nameList) {
+        case 0:
+            makeNames("1880s names.csv");
+            break;
+        case 1:
+            makeNames("1950s names.csv");
+            break;
+        case 2:
+            makeNames("2000s names.csv");
+            break;
+    }
     // Get the first name on the shuffled list
     this->index = 0;
     this->currentName = this->names[0];
@@ -65,20 +119,22 @@ If the given string matches with the phonetics, then a score is calculated.
 */
 void Cpu::processInput(string input) {
     // FIXME Add input cleaning function
-
-    string desired = soundex(this->currentName);
-    string given = soundex(input);
+    string desired, given;
+    switch(this->opponent) {
+        case 0:
+            desired = soundex(this->currentName);
+            given = soundex(input);
+            break;
+        case 1:
+            desired = nysiis(this->currentName);
+            given = nysiis(input);
+            break;
+        case 2:
+            desired = metaphone(this->currentName);
+            given = metaphone(input);
+            break;
+    }
     if (desired == given) {
         calculateScore(input);
     }
-}
-
-/* Calculate Score function
-Only called when the phonetics of the current name and the input string are the
-same.
-Calculates the score as a Damerau Levenshtein distance and sets it to
-this->score.
-*/
-void Cpu::calculateScore(string A) {
-    this->score = dynamicDL(this->currentName, A);
 }
