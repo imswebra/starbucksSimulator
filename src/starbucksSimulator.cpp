@@ -28,7 +28,7 @@ using namespace std;
 
 void round(string prompt, Cpu& game, int& score) {
     // Initialize variables
-    Timer t(45, time(NULL));
+    Timer t(90, time(NULL));
     int roundScore = 0;
     string resultsMessage = "";
 
@@ -48,14 +48,13 @@ void round(string prompt, Cpu& game, int& score) {
         int inputScore = game.getScore();
         if (inputScore == 0) resultsMessage = "Doesn't sound the same!";
         else if (inputScore > roundScore) {
-            resultsMessage = "Score of " + to_string(inputScore)
-                              + ", +" + to_string(inputScore - roundScore)
-                              + " points!";
             roundScore = inputScore;
+            resultsMessage = "Score of " + to_string(inputScore)
+                              + ", round score is now " + to_string(roundScore);
         }
         else if (inputScore <= roundScore) {
             resultsMessage = "Score of " + to_string(inputScore)
-                              + ", but not bigger than your best this round!";
+                            + ", round score is still " + to_string(roundScore);
         }
     }
 
