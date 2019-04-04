@@ -28,7 +28,7 @@ using namespace std;
 
 void round(string prompt, Cpu& game, int& score) {
     // Initialize variables
-    Timer t(45, time(NULL));
+    Timer t(30, time(NULL));
     int roundScore = 0;
     string resultsMessage = "";
 
