@@ -19,7 +19,7 @@ Final Project: Starbucks Simulator
 #include <fstream>
 #include <ctime>
 
-#include "levenshtein-distance.h"
+#include "algs/levenshtein-distance.h"
 #include "algs/soundex.h"
 #include "algs/nysiis.h"
 #include "algs/metaphone.h"
