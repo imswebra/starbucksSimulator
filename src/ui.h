@@ -53,6 +53,17 @@ Args:
 WINDOW* createPrompt(std::string prompt);
 
 
+/* Ready Screen function
+Draws the timer until the round start and the current score. Returns when the
+timer has depleted.
+
+Args:
+- round: The current round number
+- score: The score to display
+*/
+void readyScreen(int round, int score);
+
+
 /* Gameplay Screen function
 Draws the timer, score, message and input windows, processes the user input, and
 updates the timer accordingly. Returns the string typed by the user when enter

@@ -120,6 +120,47 @@ int selectScreen(string prompt, vector<string> choiceStrs) {
 }
 
 
+/* Ready Screen function
+Draws the timer until the round start and the current score. Returns when the
+timer has depleted.
+
+Args:
+- round: The current round number
+- score: The score to display
+*/
+void readyScreen(int round, int score) {
+    // Create and draw the timer prompt window
+    WINDOW* tpWin = newwin(1, 17, 3, (COLS - 21) / 2);
+    string timerPrompt = "Round " + to_string(round) + " starts in";
+    mvwprintw(tpWin, 0, 0, timerPrompt.c_str());
+    wrefresh(tpWin);
+
+    // Create and draw the timer window
+    Timer t(5, time(NULL));
+    WINDOW* tWin = newwin(1, 3, 3, (COLS - 21) / 2 + 18);
+    t.draw(tWin);
+
+    // Round 1 starts in 005
+
+    // Create and draw the score window
+    string scoreStr = to_string(score);
+    WINDOW* sWin = newwin(1, 15 + scoreStr.size(), 6,
+                          (COLS - (15 + scoreStr.size())) / 2);
+    mvwprintw(sWin, 0, 0, ("Current Score: " + scoreStr).c_str());
+    wrefresh(sWin);
+
+    // Update timer until end
+    while (t.verify()) { t.update(tWin); }
+
+    // Cleanup
+    clear();
+    delwin(tpWin);
+    delwin(tWin);
+    delwin(sWin);
+}
+
+
+
 /* Gameplay Screen function
 Draws the timer, score, message and input windows, processes the user input, and
 updates the timer accordingly. Returns the string typed by the user when enter
@@ -131,14 +172,16 @@ Args:
 - message: The message to display
 */
 string gameplayScreen(Timer& t, int score, const string& message) {
+    curs_set(1);
+
     // Create and draw the time and score window
     WINDOW* tsWin = newwin(1, 9, 5, (COLS - 9) / 2);
     mvwprintw(tsWin, 0, 0, "000 | 000");
     t.draw(tsWin);
 
-    string printScore = to_string(score);
-    printScore.insert(printScore.begin(), 3 - printScore.size(), '0');
-    mvwprintw(tsWin, 0, 6, printScore.c_str());
+    string scoreStr = to_string(score);
+    scoreStr.insert(scoreStr.begin(), 3 - scoreStr.size(), '0');
+    mvwprintw(tsWin, 0, 6, scoreStr.c_str());
     wrefresh(tsWin);
 
     // Create and draw the message window
@@ -159,13 +202,15 @@ string gameplayScreen(Timer& t, int score, const string& message) {
         if (!t.verify()) break; // Break if out of time
         b.redrawCursor(iWin);
         if(processKeyboard(iWin, b)) break; // Break if Enter was pressed
-    };
+    }
 
     // Cleanup
     delwin(tsWin);
-    wclear(mWin);
+    werase(mWin);
+    wrefresh(mWin);
     delwin(mWin);
     delwin(iWin);
+    curs_set(0);
     return b.getBuffer();
 }
 
