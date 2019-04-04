@@ -28,9 +28,6 @@ Final Project: Starbucks Simulator
 
 using namespace std;
 
-// Debug Flag
-bool debug = true;
-
 // ------------- //
 // Class Methods //
 // ------------- //
