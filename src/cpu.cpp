@@ -44,6 +44,7 @@ void Cpu::calculateScore(string A) {
     this->score = dynamicDL(this->currentName, A);
 }
 
+
 /* Make Names function
 Opens the given filename and adds 5 random lines to the names vector
 */
@@ -72,6 +73,16 @@ void Cpu::makeNames(string filename) {
     inputFile.close();
 }
 
+
+/* Clean Input function
+Removes the spaces, hyphens and apostrophes from the passed string. */
+void Cpu::cleanInput(string& input) {
+    input.erase(remove(input.begin(), input.end(), ' '), input.end());
+    input.erase(remove(input.begin(), input.end(), '-'), input.end());
+    input.erase(remove(input.begin(), input.end(), '\''), input.end());
+}
+
+
 // Public methods
 
 // Constructor
@@ -93,6 +104,7 @@ Cpu::Cpu(int c, int o) : nameList(c), opponent(o) {
     this->currentName = this->names[0];
 }
 
+
 /* Next Name function
 Checks if reached end of list, if not then it sets currentName to the next name
 on the list
@@ -107,12 +119,14 @@ void Cpu::nextName() {
     }
 }
 
+
 /* Display Name function
 Returns the current name as a std::string
 */
 string Cpu::displayName() {
     return this->currentName;
 }
+
 
 /* Get Score function
 Retrieves the calculated score, if no score has been calculated score = 0
@@ -121,14 +135,16 @@ int Cpu::getScore() {
     return this->score;
 }
 
+
 /* Process Input function
 Given an input as a string, checks using the chosen phonetic algorithm whether
 it matches with the phonetics of the given/current name.
 If the given string matches with the phonetics, then a score is calculated.
 */
 void Cpu::processInput(string input) {
-    // FIXME Add input cleaning function
     string desired, given;
+    cleanInput(input);
+    
     switch(this->opponent) {
         case 0:
             desired = soundex(this->currentName);

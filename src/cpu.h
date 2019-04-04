@@ -20,6 +20,8 @@ private:
     int nameList;
     int opponent;
     int score = 0;
+    std::vector<std::string> names;
+
 
     /* Calculate Score function
     Only called when the phonetics of the current name and the input string are the
@@ -31,7 +33,10 @@ private:
 
     void makeNames(std::string filename);
 
-    std::vector<std::string> names;
+    /* Clean Input function
+    Removes the spaces, hyphens and apostrophes from the passed string. */
+    void cleanInput(std::string& input);
+
 
 public:
     // Constructor

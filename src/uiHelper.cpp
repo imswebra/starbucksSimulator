@@ -251,6 +251,7 @@ bool processKeyboard(WINDOW* iWin, Buffer& b) {
         case 'a' ... 'z':
         case ' ':
         case '-':
+        case '\'':
             b.insert(iWin, (char) key);
             break;
         case KEY_BACKSPACE:
