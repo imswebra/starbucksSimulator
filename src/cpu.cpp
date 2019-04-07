@@ -39,6 +39,9 @@ Only called when the phonetics of the current name and the input string are the
 same.
 Calculates the score as a Damerau Levenshtein distance and sets it to
 this->score.
+
+Args:
+- A: The valid user inputted string.
 */
 void Cpu::calculateScore(string A) {
     this->score = dynamicDL(this->currentName, A);
@@ -46,16 +49,21 @@ void Cpu::calculateScore(string A) {
 
 
 /* Make Names function
-Opens the given filename and adds 5 random lines to the names vector
+Opens the given filename and adds 5 random lines of names to the names vector
+
+Args:
+- filename: The file path to open
 */
 void Cpu::makeNames(string filename) {
     // Initial declarations
-    srand (time(NULL));
+    srand (time(NULL));  // the generator seed
     ifstream inputFile(filename);
     string readLine;
     string readWord;
     int lineNum = 0;
     int random;
+
+    // Get 5 strings
     for (int i = 0; i < 5; i++) {
         random = rand() % 100 + 1;  // between 1 - 100
         while (lineNum < 100) {
@@ -70,12 +78,17 @@ void Cpu::makeNames(string filename) {
         inputFile.seekg(0, ios_base::beg);  // set the stream back to start of file
         lineNum = 0;
     }
+    // Remember to close the ifstream
     inputFile.close();
 }
 
 
 /* Clean Input function
-Removes the spaces, hyphens and apostrophes from the passed string. */
+Removes the spaces, hyphens and apostrophes from the passed string.
+
+Args:
+- input: The unformatted user input as a string
+*/
 void Cpu::cleanInput(string& input) {
     input.erase(remove(input.begin(), input.end(), ' '), input.end());
     input.erase(remove(input.begin(), input.end(), '-'), input.end());
@@ -85,7 +98,11 @@ void Cpu::cleanInput(string& input) {
 
 // Public methods
 
-// Constructor
+/* Constructor
+Args:
+- c: The integer value (0 - 2) for which name list to read.
+- o: The integer value (0 - 2) for which phonetic algorithm to use.
+*/
 Cpu::Cpu(int c, int o) : nameList(c), opponent(o) {
     // Construct the name list
     switch (this->nameList) {
@@ -140,6 +157,9 @@ int Cpu::getScore() {
 Given an input as a string, checks using the chosen phonetic algorithm whether
 it matches with the phonetics of the given/current name.
 If the given string matches with the phonetics, then a score is calculated.
+
+Args:
+- input: The string that the user has inputted
 */
 void Cpu::processInput(string input) {
     string desired, given;

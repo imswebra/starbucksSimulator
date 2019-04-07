@@ -9,10 +9,20 @@ Final Project: Starbucks Simulator
 #########################################
 */
 
+// ---------//
+// Includes //
+// ---------//
 #include <string>
 #include <vector>
 
+// ----------------- //
+// Class Declaration //
+// ----------------- //
 
+/* CPU class
+Handles the communication between the player input from the user interface and
+the game algorithms.
+*/
 class Cpu {
 private:
     bool dFlag = false;  // debugging
@@ -29,18 +39,35 @@ private:
     same.
     Calculates the score as a Damerau Levenshtein distance and sets it to
     this->score.
+
+    Args:
+    - A: The valid user inputted string.
     */
     void calculateScore(std::string input);
 
+    /* Make Names function
+    Opens the given filename and adds 5 random lines of names to the names vector
+
+    Args:
+    - filename: The file path to open
+    */
     void makeNames(std::string filename);
 
     /* Clean Input function
-    Removes the spaces, hyphens and apostrophes from the passed string. */
+    Removes the spaces, hyphens and apostrophes from the passed string.
+
+    Args:
+    - input: The unformatted user input as a string
+    */
     void cleanInput(std::string& input);
 
 
 public:
-    // Constructor
+    /* Constructor
+    Args:
+    - c: The integer value (0 - 2) for which name list to read.
+    - o: The integer value (0 - 2) for which phonetic algorithm to use.
+    */
     Cpu(int c, int o);
 
     /* Next Name function
@@ -53,6 +80,9 @@ public:
     Given an input as a string, checks using the chosen phonetic algorithm whether
     it matches with the phonetics of the given/current name.
     If the given string matches with the phonetics, then a score is calculated.
+
+    Args:
+    - input: The string that the user has inputted
     */
     void processInput(std::string input);
 

@@ -74,6 +74,10 @@
          STARLEPER          STRLPR     XTRLPR
          THRASH             TRX        0RX
 */
+
+// ------------------------ //
+// Includes and Definitions //
+// ------------------------ //
 #include "metaphone.h"
 
 #include <stdio.h>
@@ -88,8 +92,24 @@ using namespace std;
 #define FALSE (0)
 #define NULLCHAR (char *) 0
 
+// --------- //
+// Functions //
+// --------- //
 
+/* Phonetic Conversion function
 
+Michael J. Kuhn's metaphone algorithm in C converted to C++, without the
+deprecated IBM string comparison functions.
+
+Given a string name, it then checks character by character through a long list
+of comparisons to find the proper English pronounciation of the word.
+
+Args:
+- name: The string to convert into the phonetic version
+
+Returns:
+metaph: The phonetic pronounciation of string name.
+*/
 string phonetic(string name) {
     char VOWELS[]="AEIOU",
          FRONTV[]="EIY",   /* special cases for letters in FRONT of these */
@@ -99,7 +119,7 @@ string phonetic(string name) {
     char excpPAIR[]="AGKPW", /* exceptions "ae-", "gn-", "kn-", "pn-", "wr-" */
          nextLTR[] ="ENNNR";
     char *chrptr, *chrptr1;
-    
+
     int  ii, jj, silent, hard, Lng, lastChr;
     string metaph;
     unsigned int metalen = 50;
@@ -371,6 +391,17 @@ string phonetic(string name) {
     return metaph;
 }
 
+/* Metaphone Caller function
+Given string s, calls the phonetic function to generate the phonetic string,
+then quickly cleans up the outputted phonetic string to avoid errors from
+deprecated C conversion.
+
+Args:
+- s: The string to be converted to phonetic version
+
+Returns:
+metaphone: The cleaned phonetic version of the given string s.
+*/
 string metaphone(string s) {
     string metaphone;
     s = phonetic(s);
