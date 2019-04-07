@@ -36,7 +36,7 @@ $(OBJ_DIR)/ui.o: ui.cpp ui.h uiHelper.h
 $(OBJ_DIR)/uiHelper.o: uiHelper.cpp uiHelper.h
 	$(CC) $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/cpu.o: cpu.cpp cpu.h levenshtein-distance.h soundex.h
+$(OBJ_DIR)/cpu.o: cpu.cpp cpu.h levenshtein-distance.h soundex.h nysiis.h metaphone.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/preprocess.o: preprocess.cpp preprocess.h
