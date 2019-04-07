@@ -9,9 +9,9 @@ Final Project: Starbucks Simulator
 #########################################
 */
 
-// -------- //
-// Includes //
-// -------- //
+// ------------------------ //
+// Includes and Definitions //
+// ------------------------ //
 #include <string>
 
 

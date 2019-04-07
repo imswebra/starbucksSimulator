@@ -7,9 +7,9 @@ Final Project: Starbucks Simulator
 #########################################
 */
 
-// -------- //
-// Includes //
-// -------- //
+// ------------------------ //
+// Includes and Definitions //
+// ------------------------ //
 #include <string>
 #include <algorithm> // remove, replace, unique, search
 
@@ -34,6 +34,7 @@ removeChars - O(mn) with respect to the string's length and the number of chars
 removeDuplicates - Linear with respect to the string's length
 makeUppercase - Linear with respect the string's length
 */
+
 
 /* Replace Strings function
 Replaces all occurrences of oldVal in str between start and end with newVal.

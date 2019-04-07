@@ -18,7 +18,6 @@ Final Project: Starbucks Simulator
 #include <ctime>
 
 #include "uiHelper.h"
-#include "cpu.h"
 
 using namespace std;
 
@@ -87,6 +86,7 @@ WINDOW* createPrompt(string prompt) {
 
     return pWin;
 }
+
 
 /* Select Screen function
 Draws the select screen and processes user input to allow user selection.
@@ -158,7 +158,6 @@ void readyScreen(int round, int score) {
     delwin(tWin);
     delwin(sWin);
 }
-
 
 
 /* Gameplay Screen function

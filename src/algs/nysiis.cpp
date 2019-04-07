@@ -7,9 +7,9 @@ Final Project: Starbucks Simulator
 #########################################
 */
 
-// -------- //
-// Includes //
-// -------- //
+// ------------------------ //
+// Includes and Definitions //
+// ------------------------ //
 #include "nysiis.h"
 
 #include <string>
@@ -27,7 +27,7 @@ using namespace std;
 
 /* NYSIIS Replace H function
 Handles the 'H' character replacement of the NYSIIS function, replacing it with
-the preceding letter if either the preceding or letter is not a vowel.
+the preceding letter if either the preceding or following letter is not a vowel.
 */
 void nyssiisReplaceH(string& str) {
     // Variable initialization
