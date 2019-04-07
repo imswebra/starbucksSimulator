@@ -35,8 +35,8 @@ void round(string prompt, Cpu& game, int& score) {
     // Create and draw the prompt
     WINDOW* pWin = createPrompt(prompt);
 
-    // Draw the rest of the gameplay screen and get the user input
     while (t.verify()) {
+        // Draw the rest of the gameplay screen and get the user input
         string input = gameplayScreen(t, roundScore + score, resultsMessage);
         if (input.empty() || input == game.displayName()) {
             resultsMessage = "";
@@ -46,7 +46,7 @@ void round(string prompt, Cpu& game, int& score) {
         // Verify equal phonetic index
         game.processInput(input);
 
-        // Calculate awarded points
+        // Calculate awarded points, notify user
         int inputScore = game.getScore();
         if (inputScore == 0) resultsMessage = "Doesn't sound the same!";
         else if (inputScore > roundScore) {
@@ -73,16 +73,16 @@ void round(string prompt, Cpu& game, int& score) {
 // Main function
 int main() {
     cout << "Starbucks Simulator Starting..." << endl;
-    if(system("resize -s 12 55")); // Terminal dependent
+    if(system("resize -s 12 55")); // Terminal dependent, see README
     sleep(1);
 
     // Ncurses initialization
     initscr();
     cbreak();
     noecho();
+    curs_set(0);
 
     while (true) {
-        curs_set(0);
         titleScreen();
 
         int character = selectScreen("Choose your fighter",
@@ -104,6 +104,7 @@ int main() {
         readyScreen(3, score);
         round("Round 3: " + game.displayName(), game, score);
 
+        // If player chooses to quit
         if (!resultsScreen(score)) { break; }
     }
 
