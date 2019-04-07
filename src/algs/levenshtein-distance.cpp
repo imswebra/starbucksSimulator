@@ -16,7 +16,7 @@ Final Project: Starbucks Simulator
 #include <algorithm>  // for min()
 #include <cstring>  // for memset()
 
-#include "../preprocess.h"
+#include "../strProcess.h"
 
 // Size 26 means that no accented characters are supported
 #define alphabetSize 26  // Supported alphabet size

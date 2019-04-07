@@ -18,7 +18,7 @@ VPATH = $(SRC_DIR):$(SRC_DIR)/$(ALGS_DIR)
 
 # Program and Objects
 PROGRAM = starbucksSimulator
-OBJS = starbucksSimulator.o ui.o uiHelper.o cpu.o preprocess.o levenshtein-distance.o soundex.o nysiis.o metaphone.o
+OBJS = starbucksSimulator.o ui.o uiHelper.o cpu.o strProcess.o levenshtein-distance.o soundex.o nysiis.o metaphone.o
 
 
 ###############
@@ -39,16 +39,16 @@ $(OBJ_DIR)/uiHelper.o: uiHelper.cpp uiHelper.h
 $(OBJ_DIR)/cpu.o: cpu.cpp cpu.h levenshtein-distance.h soundex.h nysiis.h metaphone.h
 	$(CC) $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/preprocess.o: preprocess.cpp preprocess.h
+$(OBJ_DIR)/strProcess.o: strProcess.cpp strProcess.h
 	$(CC) $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/levenshtein-distance.o: levenshtein-distance.cpp levenshtein-distance.h preprocess.h
+$(OBJ_DIR)/levenshtein-distance.o: levenshtein-distance.cpp levenshtein-distance.h strProcess.h
 	$(CC) $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/soundex.o: soundex.cpp soundex.h preprocess.h
+$(OBJ_DIR)/soundex.o: soundex.cpp soundex.h strProcess.h
 	$(CC) $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/nysiis.o: nysiis.cpp nysiis.h preprocess.h
+$(OBJ_DIR)/nysiis.o: nysiis.cpp nysiis.h strProcess.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/metaphone.o: metaphone.cpp metaphone.h

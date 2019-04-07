@@ -1,5 +1,5 @@
-#ifndef _PREPROCESS_H_
-#define _PREPROCESS_H_
+#ifndef _STRPROCESS_H_
+#define _STRPROCESS_H_
 /*
 Author: Eric Claerhout, Henry Lin
 Student ID: 1532360, 1580649
