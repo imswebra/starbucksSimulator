@@ -130,6 +130,6 @@ pseudocode:
 - removeChars() in strProcess: https://stackoverflow.com/a/5891643
 - removeDuplicates() in strProcess: https://stackoverflow.com/a/27663803
 
-The name list data were picked from this github repo containing a csv of baby
+The name list data were picked from this GitHub repo containing a csv of baby
 names:
 - https://github.com/hadley/data-baby-names/blob/master/baby-names.csv
