@@ -62,8 +62,8 @@ starbucksSimulator.zip
 |	 | 		├── nysiis.h
 |	 | 		├── soundex.cpp
 |	 |		└── soundex.h
-|	 ├── cpu.cpp (########################################### HENRY FIXME)
-|	 ├── cpu.h
+|	 ├── gameController.cpp (Handles interaction between user and algorithms)
+|	 ├── gameController.h
 |	 ├── starbucksSimulator.cpp (Main program file)
 |	 ├── strProcess.cpp (Collection of string processing functions)
 |	 ├── strProcess.h
@@ -103,8 +103,15 @@ programmed to center itself horizontally and should still look nice. The only
 exception is when the terminal is being run fullscreen or in a maximized window,
 as Ubuntu's window manager is then taking control over the terminal's size.
 
+The name datafiles are custom made, they contain one name per line and must be
+exactly 100 lines long. These files are in the data folder and the names can be
+changed at will, but must always be 100 lines of names and one empty line for
+the EOF character.
 
-################################### HENRY FIXME: csvs needing to be 100 lines long
+In addition, Metaphone is not available in full pseudocode for free, as it
+requires a license. Instead, Michael Kuhn's implementation of the Metaphone from
+BASIC to C was used, as it has been released to the public. With proper
+crediting, our project modifies Kuhn's C code into usable C++ code.
 
 
 Sources:
@@ -112,9 +119,17 @@ Phonetic algorithms based on the Wikipedia pseudocode:
 - https://en.wikipedia.org/wiki/Soundex
 - https://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System
 
+Michael Kuhn's implementation of Metaphone in C is available online at:
+- http://aspell.net/metaphone/metaphone-kuhn.txt
+
+Damerau-levenshtein Distance calculation algorithm based from this Wikipedia
+pseudocode:
+- https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+
 - posMod() in Choices class: https://stackoverflow.com/a/14997413
 - removeChars() in strProcess: https://stackoverflow.com/a/5891643
 - removeDuplicates() in strProcess: https://stackoverflow.com/a/27663803
 
-################################### HENRY FIXME: Where the name data came from
-################################### HENRY FIXME: source for metaphone and DL
+The name list data were picked from this github repo containing a csv of baby
+names:
+- https://github.com/hadley/data-baby-names/blob/master/baby-names.csv
