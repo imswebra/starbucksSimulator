@@ -17,7 +17,7 @@ Final Project: Starbucks Simulator
 
 #include "ui.h"
 #include "uiHelper.h" // For Timer class
-#include "cpu.h"
+#include "gameController.h"
 
 using namespace std;
 

@@ -10,7 +10,7 @@ Final Project: Starbucks Simulator
 // ------------------------ //
 // Includes and Definitions //
 // ------------------------ //
-#include "cpu.h"
+#include "gameController.h"
 
 #include <string>
 #include <algorithm>  // for random_shuffle

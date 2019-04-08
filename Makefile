@@ -27,7 +27,7 @@ OBJS = starbucksSimulator.o ui.o uiHelper.o cpu.o strProcess.o levenshtein-dista
 $(PROGRAM): $(OBJ_DIR) $(addprefix $(OBJ_DIR)/,$(OBJS))
 	$(CC) $(addprefix $(OBJ_DIR)/,$(OBJS)) -o $(PROGRAM) $(LFLAGS)
 
-$(OBJ_DIR)/starbucksSimulator.o: starbucksSimulator.cpp ui.h cpu.h
+$(OBJ_DIR)/starbucksSimulator.o: starbucksSimulator.cpp ui.h gameController.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/ui.o: ui.cpp ui.h uiHelper.h
@@ -36,7 +36,7 @@ $(OBJ_DIR)/ui.o: ui.cpp ui.h uiHelper.h
 $(OBJ_DIR)/uiHelper.o: uiHelper.cpp uiHelper.h
 	$(CC) $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/cpu.o: cpu.cpp cpu.h levenshtein-distance.h soundex.h nysiis.h metaphone.h
+$(OBJ_DIR)/cpu.o: gameController.cpp gameController.h levenshtein-distance.h soundex.h nysiis.h metaphone.h
 	$(CC) $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/strProcess.o: strProcess.cpp strProcess.h
