@@ -59,7 +59,6 @@ void Cpu::makeNames(string filename) {
     srand (time(NULL));  // the generator seed
     ifstream inputFile(filename);
     string readLine;
-    string readWord;
     int lineNum = 0;
     int random;
 

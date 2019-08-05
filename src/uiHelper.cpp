@@ -40,7 +40,7 @@ void Timer::update(WINDOW* win) {
     timerVal = max - difftime(time(NULL), startTime);
     if (timerVal == oldVal) return;
     draw(win);
-;}
+}
 
 // Returns false if the timer is less than zero
 bool Timer::verify() {
