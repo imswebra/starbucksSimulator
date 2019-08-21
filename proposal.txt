@@ -3,7 +3,6 @@ Group Members: Eric Claerhout, Henry Lin
 IDs:           1532360, 1580649
 
 Description:
-
 Starbucks simulator is a terminal-based game where users are given a randomly
 chosen name and are tasked with finding alternative spellings in a timed
 environment, akin to the common misspellings of client names by Starbucks
