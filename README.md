@@ -1,5 +1,5 @@
 # Starbucks Simulator
-A University of Alberta CMPUT 275 final project by Eric Claerhout (@imswebra) and Henry Lin (@heyitshenrylin).
+A University of Alberta CMPUT 275 final project by Eric Claerhout ([@imswebra](https://github.com/imswebra)) and Henry Lin ([@heyitshenrylin](https://github.com/heyitshenrylin)).
 
 | ![Title screen](screenshots/title.png) | ![Choose your fighter!](screenshots/fighter.png) |
 | --- | --- |
